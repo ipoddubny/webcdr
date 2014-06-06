@@ -1,0 +1,14 @@
+{
+  "name": "webcdr",
+  "version": "0.0.0",
+  "description": "Web Asterisk CDR viewer",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ivan Poddubny <ivan.poddubny@gmail.com>",
+  "license": "Proprietary",
+  "dependencies": {
+    "express": "~4.4.1"
+  }
+}
