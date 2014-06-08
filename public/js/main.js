@@ -3,6 +3,7 @@ var app = new Backbone.Marionette.Application();
 window.app = app;
 
 var MainView = require('./MainView');
+var NavbarView = require('./NavbarView');
 
 var CDR = require('./CDR');
 app.CDR = CDR;
@@ -15,17 +16,6 @@ $(function () {
     main: '#main'
   });
 
-  /*
-  app.addInitializer(function () {
-    var cdr = new Backbone.Collection([{id:1}, {id:2}]);
-    var myView = new MainView({
-      collection: cdr
-    });
-    myView.render();
-    app.main.show(myView);
-  });
-  */
-
   app.on("initialize:after", function(options){
     if (Backbone.history) {
       Backbone.history.start();
@@ -37,6 +27,15 @@ $(function () {
       });
       app.main.show(myView);
     });
+
+    var navcol = new Backbone.Collection([{
+      name: 'App'
+    }]);
+
+    var navbar = new NavbarView({
+      collection: navcol
+    });
+    app.navigation.show(navbar);
   });
 
   app.start();

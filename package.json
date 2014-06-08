@@ -4,6 +4,7 @@
   "description": "Web Asterisk CDR viewer",
   "main": "server.js",
   "scripts": {
+    "watch": "watchify public/js/main.js -d -o public/js/build/bundle.js -v",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ivan Poddubny <ivan.poddubny@gmail.com>",
