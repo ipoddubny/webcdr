@@ -29,7 +29,9 @@ $(function () {
     });
 
     var navcol = new Backbone.Collection([{
-      name: 'App'
+      name: 'Звонки'
+    }, {
+      name: 'Сводный отчёт'
     }]);
 
     var navbar = new NavbarView({
