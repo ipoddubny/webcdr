@@ -1,32 +1,42 @@
 
 var app = new Backbone.Marionette.Application();
+window.app = app;
 
-var superView = Marionette.ItemView.extend({
-  template: _.template('<div>hello once again</div>'),
-});
+var MainView = require('./MainView');
 
-var mainRegion = Marionette.Region.extend({
-  el: '#container'
-});
+var CDR = require('./CDR');
+app.CDR = CDR;
+
 
 $(function () {
 
   app.addRegions({
-    mainRegion: mainRegion
+    navigation: '#navigation',
+    main: '#main'
   });
 
+  /*
   app.addInitializer(function () {
-    console.log('hello');
-    var myView = new superView();
+    var cdr = new Backbone.Collection([{id:1}, {id:2}]);
+    var myView = new MainView({
+      collection: cdr
+    });
     myView.render();
-    console.log(myView.el);
-    app.mainRegion.show(myView);
+    app.main.show(myView);
   });
+  */
 
   app.on("initialize:after", function(options){
-    if (Backbone.history){
+    if (Backbone.history) {
       Backbone.history.start();
     }
+    var cdrs = new CDR();
+    cdrs.fetch().then(function () {
+      var myView = new MainView({
+        collection: cdrs
+      });
+      app.main.show(myView);
+    });
   });
 
   app.start();

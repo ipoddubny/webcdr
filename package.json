@@ -9,6 +9,11 @@
   "author": "Ivan Poddubny <ivan.poddubny@gmail.com>",
   "license": "Proprietary",
   "dependencies": {
-    "express": "~4.4.1"
+    "express": "~4.4.1",
+    "brfs": "~1.1.1"
+  },
+  "private": true,
+  "browserify": {
+    "transform": [ "brfs" ]
   }
 }
