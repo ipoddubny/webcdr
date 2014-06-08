@@ -11,10 +11,13 @@
   "license": "Proprietary",
   "dependencies": {
     "express": "~4.4.1",
-    "brfs": "~1.1.1"
+    "brfs": "~1.1.1",
+    "compression": "~1.0.6"
   },
   "private": true,
   "browserify": {
-    "transform": [ "brfs" ]
+    "transform": [
+      "brfs"
+    ]
   }
 }
