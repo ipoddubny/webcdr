@@ -4,6 +4,8 @@ window.app = app;
 
 var CDRView = require('./views/CDRView');
 var NavbarView = require('./views/NavbarView');
+var LoadingView = require('./views/LoadingView');
+var ReportView = require('./views/ReportView');
 
 var CDR = require('./CDR');
 app.CDR = CDR;
@@ -21,6 +23,8 @@ $(function () {
       Backbone.history.start();
     }
 
+    app.main.show(new LoadingView());
+
     var cdrs = new CDR();
     var cdrView = new CDRView({
       collection: cdrs
@@ -29,11 +33,6 @@ $(function () {
       app.main.show(cdrView);
     });
 
-    var ReportView = Marionette.ItemView.extend({
-      template: function() {
-        return 'Отчёт';
-      }
-    });
     var reportView = new ReportView();
 
     var navcol = new Backbone.Collection([{
