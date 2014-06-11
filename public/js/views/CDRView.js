@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-var tmpl = fs.readFileSync(__dirname + '/templates/cdr.tmpl', 'utf8');
+var tmpl = fs.readFileSync(__dirname + '/../templates/cdr.tmpl', 'utf8');
 
 var columns = [{
   name: "id",
