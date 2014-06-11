@@ -7,6 +7,31 @@ var columns = [{
   label: "ID",
   editable: false,
   cell: 'integer'
+}, {
+  name: 'calldate',
+  label: 'Время',
+  editable: false,
+  cell: 'datetime'
+}, {
+  name: 'src',
+  label: 'Кто звонил',
+  editable: false,
+  cell: 'string'
+}, {
+  name: 'dst',
+  label: 'Куда звонил',
+  editable: false,
+  cell: 'string'
+}, {
+  name: 'disposition',
+  label: 'Статус',
+  editable: false,
+  cell: 'string'
+}, {
+  name: 'billsec',
+  label: 'Время разговора',
+  editable: false,
+  cell: 'string'
 }];
 
 var MainView = Marionette.ItemView.extend({

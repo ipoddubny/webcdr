@@ -5,6 +5,21 @@ var app = express();
 app.use(compress());
 app.use(express.static(__dirname + '/public'));
 
+var Bookshelf = require('bookshelf');
+Bookshelf.db = Bookshelf.initialize({
+  client: 'mysql',
+  connection: {
+    host: 'localhost',
+    user: 'root',
+    password: '123321',
+    database: 'asteriskcdrdb'
+  }
+});
+
+var CDR = Bookshelf.db.Model.extend({
+  tableName: 'cdr'
+});
+
 var collection = [{
   id: 1
 }, {
@@ -14,7 +29,9 @@ var collection = [{
 }];
 
 app.get('/api/cdrs', function (req, res) {
-  res.json(collection);
+  CDR.collection().fetch().then(function (collection) {
+    res.json(collection);
+  });
 });
 
 app.listen(process.env.PORT || 9030);

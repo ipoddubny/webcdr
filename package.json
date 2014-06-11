@@ -12,7 +12,10 @@
   "dependencies": {
     "express": "~4.4.1",
     "brfs": "~1.1.1",
-    "compression": "~1.0.6"
+    "compression": "~1.0.6",
+    "mysql": "~2.3.2",
+    "knex": "~0.5.15",
+    "bookshelf": "~0.6.12"
   },
   "private": true,
   "browserify": {
