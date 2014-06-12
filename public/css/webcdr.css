@@ -1,3 +1,11 @@
 body {
 	padding-top: 60px;
 }
+
+.phone {
+	margin: 0 0 10px 0;
+}
+
+#filters {
+	padding-bottom: 44px;
+}
