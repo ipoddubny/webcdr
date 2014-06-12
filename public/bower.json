@@ -17,6 +17,8 @@
     "marionette": "~1.8.6",
     "bootstrap": "~3.1.1",
     "backgrid": "~0.3.5",
-    "spin.js": "~2.0.1"
+    "spin.js": "~2.0.1",
+    "backbone.paginator": "~2.0.0",
+    "backgrid-paginator": "~0.3.5"
   }
 }

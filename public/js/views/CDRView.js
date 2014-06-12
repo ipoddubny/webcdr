@@ -2,12 +2,18 @@ var fs = require('fs');
 
 var tmpl = fs.readFileSync(__dirname + '/../templates/cdr.tmpl', 'utf8');
 
+var status2text = {
+  'NO ANSWER': 'Не отвечен',
+  BUSY: 'Занято',
+  ANSWERED: 'Отвечен'
+};
+var StatusFormatter = _.extend({}, Backgrid.CellFormatter.prototype, {
+  fromRaw: function (raw, model) {
+    return status2text[raw] || raw;
+  }
+});
+
 var columns = [{
-  name: "id",
-  label: "ID",
-  editable: false,
-  cell: 'integer'
-}, {
   name: 'calldate',
   label: 'Время',
   editable: false,
@@ -26,7 +32,8 @@ var columns = [{
   name: 'disposition',
   label: 'Статус',
   editable: false,
-  cell: 'string'
+  cell: 'string',
+  formatter: StatusFormatter
 }, {
   name: 'billsec',
   label: 'Время разговора',
@@ -41,9 +48,13 @@ var MainView = Marionette.ItemView.extend({
       columns: columns,
       collection: this.collection
     });
+    this.paginator = new Backgrid.Extension.Paginator({
+      collection: this.collection
+    });
   },
   onRender: function () {
     this.$('#grid').html(this.grid.render().el);
+    this.$('#paginator').html(this.paginator.render().el);
   }
 });
 

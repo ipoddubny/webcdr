@@ -8,8 +8,6 @@ var LoadingView = require('./views/LoadingView');
 var ReportView = require('./views/ReportView');
 
 var CDR = require('./CDR');
-app.CDR = CDR;
-
 
 $(function () {
 
@@ -26,6 +24,8 @@ $(function () {
     app.main.show(new LoadingView());
 
     var cdrs = new CDR();
+    app.cdrs = cdrs;
+
     var cdrView = new CDRView({
       collection: cdrs
     });
