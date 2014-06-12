@@ -41,20 +41,25 @@ var columns = [{
   cell: 'string'
 }];
 
-var MainView = Marionette.ItemView.extend({
+var MainView = Marionette.Layout.extend({
   template: _.template(tmpl),
+  regions: {
+    filters: '#filters',
+    grid: '#grid',
+    paginator: '#paginator'
+  },
   initialize: function (options) {
-    this.grid = new Backgrid.Grid({
+    this.gridView = new Backgrid.Grid({
       columns: columns,
       collection: this.collection
     });
-    this.paginator = new Backgrid.Extension.Paginator({
+    this.paginatorView = new Backgrid.Extension.Paginator({
       collection: this.collection
     });
   },
-  onRender: function () {
-    this.$('#grid').html(this.grid.render().el);
-    this.$('#paginator').html(this.paginator.render().el);
+  onShow: function () {
+    this.grid.show(this.gridView);
+    this.paginator.show(this.paginatorView);
   }
 });
 
