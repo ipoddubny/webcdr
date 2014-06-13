@@ -1,14 +1,28 @@
-<form class="form-inline">
+<form class="form-horizontal">
 	<div class="form-group">
-		<label for="status_filter">Статус</label>
-		<select class="selectpicker span2" id="status_filter" multiple>
-			<option value="ANSWERED">Отвечен</option>
-			<option value="NO ANSWER">Не отвечен</option>
-			<option value="BUSY">Занято</option>
-		</select>
+		<label for="timerange" class="control-label col-sm-2">Время</label>
+		<div class="col-sm-10">
+			<div class="controls">
+				<div class="input-group">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span><input type="text" id="timerange" class="form-control" />
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="form-group pull-right">
-		<label class="sr-only" for="phone_filter">Номер телефона</label>
-		<input class="phone form-control" id="phone_filter" placeholder="Поиск по номеру..."/>
+	<div class="form-group">
+		<label for="status_filter" class="control-label col-sm-2">Статус</label>
+		<div class="col-sm-10">
+			<select class="selectpicker span2" id="status_filter" multiple>
+				<option value="ANSWERED">Отвечен</option>
+				<option value="NO ANSWER">Не отвечен</option>
+				<option value="BUSY">Занято</option>
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="phone_filter" class="control-label col-sm-2">Телефон</label>
+		<div class="col-sm-10">
+			<input class="phone form-control" id="phone_filter" placeholder=""/>
+		</div>
 	</div>
 </form>

@@ -1,3 +1,4 @@
+moment.lang('ru');
 
 var app = new Backbone.Marionette.Application();
 window.app = app;

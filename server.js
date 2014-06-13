@@ -1,4 +1,5 @@
 var Promise = require('bluebird');
+var moment = require('moment');
 
 var express = require('express');
 var compress = require('compression');
@@ -42,6 +43,11 @@ app.get('/api/cdrs', function (req, res) {
       } else {
         this.whereRaw('1=1');
       }
+    }).andWhere(function () {
+      this.whereBetween('calldate', [
+        req.query.start || moment().startOf('day').toJSON(),
+        req.query.end || moment().endOf('day').toJSON()
+      ]);
     });
   };
 
