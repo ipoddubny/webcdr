@@ -19,6 +19,7 @@
     "backgrid": "~0.3.5",
     "spin.js": "~2.0.1",
     "backbone.paginator": "~2.0.0",
-    "backgrid-paginator": "~0.3.5"
+    "backgrid-paginator": "~0.3.5",
+    "bootstrap-select": "~1.5.2"
   }
 }

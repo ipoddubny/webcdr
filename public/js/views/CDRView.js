@@ -8,17 +8,27 @@ var status2text = {
   BUSY: 'Занято',
   ANSWERED: 'Отвечен'
 };
+
 var StatusFormatter = _.extend({}, Backgrid.CellFormatter.prototype, {
   fromRaw: function (raw, model) {
     return status2text[raw] || raw;
   }
 });
 
+var DateFormatter = _.extend({}, Backgrid.CellFormatter.prototype, {
+  fromRaw: function (raw, model) {
+    var date = new Date(raw);
+    return date.toLocaleString();
+  }
+});
+
+
 var columns = [{
   name: 'calldate',
   label: 'Время',
   editable: false,
-  cell: 'datetime'
+  cell: 'string',
+  formatter: DateFormatter
 }, {
   name: 'src',
   label: 'Кто звонил',
@@ -46,13 +56,18 @@ var columns = [{
 var FilterView = Marionette.ItemView.extend({
   template: _.template(tmplFilter),
   ui: {
-    'number': 'input.phone'
+    'number': '#phone_filter',
+    'status': '#status_filter'
   },
   events: {
-    'blur @ui.number': 'search',
-    'keyup @ui.number': 'search'
+    'blur @ui.number': 'onChangeNumber',
+    'keyup @ui.number': 'onChangeNumber',
+    'change @ui.status': 'onSelectStatus'
   },
-  search: function () {
+  initialize: function () {
+    this.filter = {};
+  },
+  onChangeNumber: function () {
     var self = this;
 
     var newValue = self.ui.number.val();
@@ -65,8 +80,18 @@ var FilterView = Marionette.ItemView.extend({
     }
     self.lastValue = newValue;
     self.timeout = setTimeout(function () {
-      self.trigger('search', newValue);
+      self.filter.number = newValue;
+      self.trigger('search', self.filter);
     }, 300);
+  },
+  onSelectStatus: function () {
+    this.filter.status = this.ui.status.val();;
+    this.trigger('search', this.filter);
+  },
+  onRender: function () {
+    this.$('.selectpicker').selectpicker({
+      noneSelectedText: 'Все'
+    });
   }
 });
 
@@ -88,9 +113,14 @@ var MainView = Marionette.Layout.extend({
   },
   onShow: function () {
     var filterView = new FilterView();
-    this.listenTo(filterView, 'search', function (number) {
+    this.listenTo(filterView, 'search', function (filter) {
       this.collection.state.currentPage = 1;
-      this.collection.queryParams.filter_number = number;
+      if (filter.number) {
+        this.collection.queryParams.filter_number = filter.number;
+      }
+      if (!_.isUndefined(filter.status)) {
+        this.collection.queryParams.status = filter.status;
+      }
       this.collection.fetch();
     });
     this.filters.show(filterView);

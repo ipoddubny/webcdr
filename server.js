@@ -23,15 +23,26 @@ var CDR = Bookshelf.db.Model.extend({
 });
 
 app.get('/api/cdrs', function (req, res) {
+  console.log('query', req.query);
   var page = parseInt(req.query.page, 10);
   var perPage = parseInt(req.query.per_page, 10);
 
   var filter = function () {
-    if (req.query.filter_number) {
-      var like =['%',req.query.filter_number,'%'].join('');
-      this.where('src', 'like', like)
-          .orWhere('dst', 'like', like);
-    }
+    this.where(function () {
+      if (req.query.filter_number) {
+        var like =['%',req.query.filter_number,'%'].join('');
+        this.where('src', 'like', like)
+            .orWhere('dst', 'like', like);
+      } else {
+        this.whereRaw('1=1');
+      }
+    }).andWhere(function () {
+      if (req.query.status) {
+        this.whereIn('disposition', req.query.status);
+      } else {
+        this.whereRaw('1=1');
+      }
+    });
   };
 
   var countPromise = Bookshelf.db.knex('cdr').count('*');
