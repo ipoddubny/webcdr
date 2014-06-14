@@ -53,11 +53,27 @@ var columns = [{
   cell: 'string'
 }];
 
+var ExportLinkView = Marionette.ItemView.extend({
+  template: _.template('<a href="#">Скачать в формате xlsx</a>'),
+  className: 'pull-right',
+  events: {
+    'click a': 'onClick'
+  },
+  onClick: function (e) {
+    var self = this;
+    e.preventDefault();
+
+    var params = _.pick(self.collection.queryParams, ['start', 'end', 'status', 'number']);
+    params.export = 'xlsx';
+    window.location.assign('/api/cdrs?' + $.param(params));
+  }
+});
 
 var CDRView = Marionette.Layout.extend({
   template: _.template(tmpl),
   regions: {
     filters: '#filters',
+    exportLink: '#export',
     grid: '#grid',
     paginator: '#paginator'
   },
@@ -80,6 +96,9 @@ var CDRView = Marionette.Layout.extend({
     });
 
     this.filters.show(filterView);
+    this.exportLink.show(new ExportLinkView({
+      collection: this.collection
+    }));
     this.grid.show(gridView);
     this.paginator.show(paginatorView);
   }

@@ -1,5 +1,8 @@
 var Promise = require('bluebird');
 var moment = require('moment');
+var _ = require('lodash');
+
+var ExcelExport = require('excel-export');
 
 var express = require('express');
 var compress = require('compression');
@@ -22,6 +25,31 @@ Bookshelf.db = Bookshelf.initialize({
 var CDR = Bookshelf.db.Model.extend({
   tableName: 'cdr'
 });
+
+function prepareXlsx (collection) {
+  var conf = {};
+  conf.cols = [{
+    caption: 'Дата и время',
+    type: 'date',
+    beforeCellWrite: function () {
+      var originDate = new Date(Date.UTC(1899, 11, 30));
+      return function (row, cellData, eOpt) {
+        console.log(cellData, typeof cellData);
+        return (cellData - originDate) / (24 * 60 * 60 * 1000);
+      };
+    }()
+  }, {
+    caption: 'Кто звонил',
+    type: 'string'
+  }, {
+    caption: 'Куда звонил',
+    type: 'string'
+  }];
+  conf.rows = collection.map(function (model) {
+    return [model.get('calldate'), model.get('src'), model.get('dst')];
+  });
+  return ExcelExport.execute(conf);
+}
 
 app.get('/api/cdrs', function (req, res) {
   console.log('query', req.query);
@@ -57,15 +85,25 @@ app.get('/api/cdrs', function (req, res) {
   var dataPromise = CDR.collection()
     .query(filter)
     .query(function (qb) {
-      qb.offset((page - 1) * perPage);
-      qb.limit(perPage);
+      if (page && perPage) {
+        qb.offset((page - 1) * perPage);
+        qb.limit(perPage);
+      }
       qb.orderBy(req.query.sort_by || 'calldate', req.query.order || 'desc');
     })
     .fetch();
 
   Promise.all([countPromise, dataPromise]).spread(function (count, collection) {
+    var result;
+    if (req.query.export === 'xlsx') {
+      result = prepareXlsx(collection);
+      res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+      res.setHeader("Content-Disposition", "attachment; filename=" + "Report.xlsx");
+      res.end(result, 'binary');
+      return;
+    };
     var cnt = count[0]['count(*)'];
-    var result = [{total_entries: cnt}, collection.toJSON()];
+    result = [{total_entries: cnt}, collection.toJSON()];
     res.json(result);
   });
 });
