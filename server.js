@@ -30,8 +30,8 @@ app.get('/api/cdrs', function (req, res) {
 
   var filter = function () {
     this.where(function () {
-      if (req.query.filter_number) {
-        var like =['%',req.query.filter_number,'%'].join('');
+      if (req.query.number) {
+        var like =['%',req.query.number,'%'].join('');
         this.where('src', 'like', like)
             .orWhere('dst', 'like', like);
       } else {

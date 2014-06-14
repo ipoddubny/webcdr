@@ -54,44 +54,35 @@ var columns = [{
 }];
 
 
-var MainView = Marionette.Layout.extend({
+var CDRView = Marionette.Layout.extend({
   template: _.template(tmpl),
   regions: {
     filters: '#filters',
     grid: '#grid',
     paginator: '#paginator'
   },
-  initialize: function (options) {
-    this.gridView = new Backgrid.Grid({
+  onShow: function () {
+    var gridView = new Backgrid.Grid({
       columns: columns,
       collection: this.collection
     });
-    this.paginatorView = new Backgrid.Extension.Paginator({
+    var paginatorView = new Backgrid.Extension.Paginator({
       collection: this.collection
     });
-  },
-  onShow: function () {
+    // TODO attach filter state to collection, and restore filter values
+    // in the interface on creating the view
     var filterView = new FilterView();
+
     this.listenTo(filterView, 'search', function (filter) {
       this.collection.state.currentPage = 1;
-      if (filter.number) {
-        this.collection.queryParams.filter_number = filter.number;
-      }
-      if (!_.isUndefined(filter.status)) {
-        this.collection.queryParams.status = filter.status;
-      }
-      if (!_.isUndefined(filter.start)) {
-        this.collection.queryParams.start = filter.start;
-      }
-      if (!_.isUndefined(filter.end)) {
-        this.collection.queryParams.end = filter.end;
-      }
+      _.extend(this.collection.queryParams, filter);
       this.collection.fetch();
     });
+
     this.filters.show(filterView);
-    this.grid.show(this.gridView);
-    this.paginator.show(this.paginatorView);
+    this.grid.show(gridView);
+    this.paginator.show(paginatorView);
   }
 });
 
-module.exports = MainView;
+module.exports = CDRView;

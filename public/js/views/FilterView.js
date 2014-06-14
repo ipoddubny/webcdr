@@ -25,9 +25,7 @@ var FilterView = Marionette.ItemView.extend({
     'keyup @ui.number': 'onChangeNumber',
     'change @ui.status': 'onSelectStatus'
   },
-  initialize: function () {
-    this.filter = {};
-  },
+  filter: {},
   onChangeNumber: function () {
     var self = this;
 
