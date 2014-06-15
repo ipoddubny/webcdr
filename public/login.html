@@ -1,13 +1,35 @@
-<form action="/login" method="post">
-    <div>
-        <label>Username:</label>
-        <input type="text" name="username"/>
-    </div>
-    <div>
-        <label>Password:</label>
-        <input type="password" name="password"/>
-    </div>
-    <div>
-        <input type="submit" value="Log In"/>
-    </div>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>WebCDR</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="css/signin.css">
+    </head>
+		<body>
+			<div class="container">
+				<form action="/login" method="post" class="form-signin">
+						<h2 class="form-signin-heading"></h2>
+						<div class="form-group">
+								<label for="username" class="sr-only">Пользователь:</label>
+								<input type="text" name="username" class="form-control" placeholder="Пользователь"/>
+						</div>
+						<div class="form-group">
+								<label for="password" class="sr-only">Пароль:</label>
+								<input type="password" name="password" class="form-control" placeholder="Пароль"/>
+						</div>
+						<div class="form-group">
+								<input type="submit" value="Войти" class="btn btn-lg btn-primary btn-block"/>
+						</div>
+				</form>
+			</div>
+    </body>
+</html>
