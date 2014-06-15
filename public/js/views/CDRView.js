@@ -18,8 +18,15 @@ var StatusFormatter = _.extend({}, Backgrid.CellFormatter.prototype, {
 
 var DateFormatter = _.extend({}, Backgrid.CellFormatter.prototype, {
   fromRaw: function (raw, model) {
-    var date = new Date(raw);
-    return date.toLocaleString();
+    return moment(raw).format('YYYY-MM-DD HH:mm:ss');
+  }
+});
+
+var TimeFormatter = _.extend({}, Backgrid.CellFormatter.prototype, {
+  fromRaw: function (raw, model) {
+    var minsec = moment.utc(raw * 1000).format('HH:mm:ss');
+    var beaux = minsec.replace(/^00:/,'').replace(/^00:/,'');
+    return beaux;
   }
 });
 
@@ -50,7 +57,8 @@ var columns = [{
   name: 'billsec',
   label: 'Время разговора',
   editable: false,
-  cell: 'string'
+  cell: 'string',
+  formatter: TimeFormatter
 }];
 
 var ExportLinkView = Marionette.ItemView.extend({
