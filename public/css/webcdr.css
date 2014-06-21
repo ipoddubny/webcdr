@@ -5,3 +5,82 @@ body {
 #export {
 	overflow: auto;
 }
+
+.audiojs {
+	height: 18px;
+	width: 200px;
+	background: #fff;
+	box-shadow: none;
+}
+
+div.audiojs {
+	display: inline-block;
+}
+.audiojs-download {
+	vertical-align: top;
+	font-size: 18px;
+	display: inline-block;
+}
+
+.audiojs .play-pause {
+	width: 25px;
+	height: 18px;
+	padding: 0px 8px 0px 0px;
+	border-right: none;
+}
+.audiojs p {
+	width: 25px;
+	height: 20px;
+	text-align: center;
+}
+
+.audiojs .loading {
+	background: none;
+}
+.audiojs .play {
+	background: none;
+}
+.audiojs .pause {
+	background: none;
+}
+.audiojs .error {
+	background: none;
+}
+
+.audiojs .pause:before {
+	font-family: "Glyphicons Halflings";
+	content: "\e073";
+}
+
+.audiojs .loading:before {
+	font-family: "Glyphicons Halflings";
+	content: "\e073";
+}
+
+.audiojs .play:before {
+	font-family: "Glyphicons Halflings";
+	content: "\e072";
+}
+.audiojs .error:before {
+	font-family: "Glyphicons Halflings";
+	content: "\e014";
+}
+
+.audiojs .scrubber {
+	background: #aaa;
+	width: 160px;
+	height: 10px;
+	margin: 5px;
+	border-top: 0px;
+}
+
+.audiojs .progress {
+	height: 10px;
+	width: 0px;
+	background: #ccc;
+	border-radius: 0px;
+}
+
+.audiojs .time { display: none; }
+.audiojs .error-message { height: 18px;line-height: 18px; }
+

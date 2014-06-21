@@ -1,5 +1,7 @@
 var router = require('express').Router();
 
+var path = require('path');
+var glob = require('glob');
 var Bookshelf = require('bookshelf').db;
 var Promise = require('bluebird');
 var moment = require('moment');
@@ -18,7 +20,6 @@ function prepareXlsx (collection) {
     beforeCellWrite: function () {
       var originDate = new Date(Date.UTC(1899, 11, 30));
       return function (row, cellData, eOpt) {
-        console.log(cellData, typeof cellData);
         return (cellData - originDate) / (24 * 60 * 60 * 1000);
       };
     }()
@@ -89,6 +90,36 @@ router.get('/cdrs', function (req, res) {
     var cnt = count[0]['count(*)'];
     result = [{total_entries: cnt}, collection.toJSON()];
     res.json(result);
+  });
+});
+
+/*****************/
+
+router.param(function (name, fn) {
+  if (fn instanceof RegExp) {
+    return function(req, res, next, val) {
+      var captures;
+      if (captures = fn.exec(String(val))) {
+        req.params[name] = captures;
+        next();
+      } else {
+        next('route');
+      }
+    }
+  }
+});
+
+router.param('id', /^\d+$/);
+
+router.get('/recordings/:id', function (req, res) {
+  CDR.forge({id: req.params.id}).fetch().then(function (cdr) {
+    var date = moment(cdr.get('calldate'));
+    var filepath = path.join('./recordings', ''+date.year(), ''+date.month(), ''+date.date(), '*' + cdr.get('uniqueid') + '.mp3');
+    glob(filepath, function (er, files) {
+      if (_.isArray(files) && files.length) {
+        res.sendfile(files[0]);
+      }
+    });
   });
 });
 

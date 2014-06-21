@@ -1,5 +1,9 @@
 moment.lang('ru');
 
+audiojs.events.ready(function() {
+  var as = audiojs.createAll();
+});
+
 var app = new Backbone.Marionette.Application();
 window.app = app;
 

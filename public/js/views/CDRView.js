@@ -24,12 +24,27 @@ var DateFormatter = _.extend({}, Backgrid.CellFormatter.prototype, {
 
 var TimeFormatter = _.extend({}, Backgrid.CellFormatter.prototype, {
   fromRaw: function (raw, model) {
+    if (raw < 60) {
+      return raw;
+    }
     var minsec = moment.utc(raw * 1000).format('HH:mm:ss');
     var beaux = minsec.replace(/^00:/,'').replace(/^00:/,'');
     return beaux;
   }
 });
 
+var AudioCell = Backgrid.AudioCell = Backgrid.StringCell.extend({
+  className: 'audio-cell',
+  render: function () {
+    this.$el.empty();
+    var src = '/api/recordings/' + this.model.id;
+    if (this.model.get(this.column.get('name'))) {
+      this.$el.html('<div class="audiojs-download"><a href="' + src + '" download><span class="glyphicon glyphicon-download"></span></a></div><audio src="' + src + '" preload="none"></audio>');
+      audiojs.create(this.$('audio')[0]);
+    }
+    return this;
+  }
+});
 
 var columns = [{
   name: 'calldate',
@@ -59,6 +74,11 @@ var columns = [{
   editable: false,
   cell: 'string',
   formatter: TimeFormatter
+}, {
+  name: 'record',
+  label: 'Запись',
+  editable: false,
+  cell: 'audio'
 }];
 
 var ExportLinkView = Marionette.ItemView.extend({
