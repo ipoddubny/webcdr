@@ -21,7 +21,6 @@ var testUsers = [{
   id: 1,
   username: 'admin',
   password: 'admin',
-  acl: ['101','102','1001'],
   admin: true
 }, {
   id: 2,

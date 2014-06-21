@@ -62,12 +62,15 @@ router.get('/cdrs', function (req, res) {
         req.query.end || moment().endOf('day').toJSON()
       ]);
     }).andWhere(function () {
-      console.log(req.user);
-      this.where(function () {
-        this.whereIn('src', req.user.acl);
-      }).orWhere(function () {
-        this.whereIn('dst', req.user.acl);
-      });
+      if (req.user.acl) {
+        this.where(function () {
+          this.whereIn('src', req.user.acl);
+        }).orWhere(function () {
+          this.whereIn('dst', req.user.acl);
+        });
+      } else {
+        this.whereRaw('1=1');
+      }
     });
   };
 
