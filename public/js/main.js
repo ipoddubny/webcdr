@@ -11,6 +11,7 @@ var CDRView = require('./views/CDRView');
 var NavbarView = require('./views/NavbarView');
 var LoadingView = require('./views/LoadingView');
 var ReportView = require('./views/ReportView');
+var AdminView = require('./views/AdminView');
 
 var CDR = require('./CDR');
 
@@ -40,7 +41,7 @@ $(function () {
 
     var reportView = new ReportView();
 
-    var navcol = new Backbone.Collection([{
+    app.navcol = new Backbone.Collection([{
       name: 'Звонки',
       target: 'cdr',
       active: true
@@ -50,14 +51,29 @@ $(function () {
     }]);
 
     var navbar = new NavbarView({
-      collection: navcol
+      collection: app.navcol
     });
     app.navigation.show(navbar);
 
+    var Profile = Backbone.Model.extend({
+      url: '/profile'
+    });
+
+    app.profile = new Profile();
+    app.profile.fetch().then(function () {
+      if (app.profile.get('admin')) {
+        app.navcol.push({
+          name: 'Администрирование',
+          target: 'admin'
+        });
+      }
+    });
+
     navbar.on('navigate', function (target) {
       var views = {
-        'cdr': cdrView,
-        'report': reportView
+        cdr: cdrView,
+        report: reportView,
+        admin: new AdminView()
       };
       app.main.show(views[target]);
     });

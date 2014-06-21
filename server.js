@@ -21,12 +21,14 @@ var testUsers = [{
   id: 1,
   username: 'admin',
   password: 'admin',
-  acl: ['101','102','1001']
+  acl: ['101','102','1001'],
+  admin: true
 }, {
   id: 2,
   username: 'test',
   password: 'test',
-  acl: ['89266079312']
+  acl: ['89266079312'],
+  admin: false
 }];
 
 var passport = require('passport');
@@ -83,6 +85,11 @@ app.use('/api', require('./api'));
 app.get('/', ensureAuthenticated);
 app.get('/', function (req, res) {
   res.sendfile('./public/index.html');
+});
+
+app.get('/profile', ensureAuthenticated);
+app.get('/profile', function (req, res) {
+  res.send(req.user);
 });
 
 app.use(express.static(__dirname + '/public'));
