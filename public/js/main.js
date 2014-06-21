@@ -15,69 +15,75 @@ var AdminView = require('./views/AdminView');
 
 var CDR = require('./CDR');
 
-$(function () {
-
-  app.addRegions({
-    navigation: '#navigation',
-    main: '#main'
-  });
-
-  app.on("initialize:after", function(options){
-    if (Backbone.history) {
-      Backbone.history.start();
-    }
-
-    app.main.show(new LoadingView());
-
-    var cdrs = new CDR();
-    app.cdrs = cdrs;
-
-    var cdrView = new CDRView({
-      collection: cdrs
-    });
-    cdrs.fetch().then(function () {
-      app.main.show(cdrView);
-    });
-
-    var reportView = new ReportView();
-
-    app.navcol = new Backbone.Collection([{
-      name: 'Звонки',
-      target: 'cdr',
-      active: true
-    }, {
-      name: 'Сводный отчёт',
-      target: 'report'
-    }]);
-
-    var navbar = new NavbarView({
-      collection: app.navcol
-    });
-    app.navigation.show(navbar);
-
-    var Profile = Backbone.Model.extend({
-      url: '/profile'
-    });
-
-    app.profile = new Profile();
-    app.profile.fetch().then(function () {
-      if (app.profile.get('admin')) {
-        app.navcol.push({
-          name: 'Администрирование',
-          target: 'admin'
-        });
-      }
-    });
-
-    navbar.on('navigate', function (target) {
-      var views = {
-        cdr: cdrView,
-        report: reportView,
-        admin: new AdminView()
-      };
-      app.main.show(views[target]);
-    });
-  });
-
-  app.start();
+app.addRegions({
+  navigation: '#navigation',
+  main: '#main'
 });
+
+app.addInitializer(function () {
+  app.main.show(new LoadingView());
+
+  app.navcol = new Backbone.Collection([{
+    name: 'Звонки',
+    target: 'cdr',
+    active: true
+  }, {
+    name: 'Сводный отчёт',
+    target: 'report'
+  }]);
+
+  app.navbar = new NavbarView({
+    collection: app.navcol
+  });
+  app.navigation.show(app.navbar);
+
+  var Profile = Backbone.Model.extend({
+    url: '/profile'
+  });
+
+  app.profile = new Profile();
+  app.profile.fetch().then(function () {
+    if (app.profile.get('admin')) {
+      app.navcol.push({
+        name: 'Администрирование',
+        target: 'admin'
+      });
+    }
+  });
+
+  app.listenTo(app.navbar, 'navigate', function (target) {
+    switch (target) {
+      case 'cdr':
+        this.showCDR();
+        break;
+      case 'report':
+        this.main.show(new ReportView());
+        break;
+      case 'admin':
+        this.main.show(new AdminView());
+        break;
+    }
+  });
+});
+
+app.showCDR = function () {
+  var self = this;
+  self.cdrs = new CDR();
+
+  var cdrView = new CDRView({
+    collection: self.cdrs
+  });
+  self.cdrs.fetch().then(function () {
+    self.main.show(cdrView);
+  });
+};
+
+app.on("initialize:after", function(options){
+  if (Backbone.history) {
+    Backbone.history.start();
+  }
+
+  this.showCDR();
+});
+
+app.start();
