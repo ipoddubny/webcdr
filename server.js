@@ -20,11 +20,13 @@ var _ = require('lodash');
 var testUsers = [{
   id: 1,
   username: 'admin',
-  password: 'admin'
+  password: 'admin',
+  acl: ['101','102','1001']
 }, {
   id: 2,
   username: 'test',
-  password: 'test'
+  password: 'test',
+  acl: ['89266079312']
 }];
 
 var passport = require('passport');
