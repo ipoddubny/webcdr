@@ -18,7 +18,7 @@ var StatusFormatter = _.extend({}, Backgrid.CellFormatter.prototype, {
 
 var DateFormatter = _.extend({}, Backgrid.CellFormatter.prototype, {
   fromRaw: function (raw, model) {
-    return moment(raw).format('YYYY-MM-DD HH:mm:ss');
+    return moment(raw).format('DD/MM/YYYY HH:mm:ss');
   }
 });
 
