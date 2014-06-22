@@ -1,5 +1,5 @@
 var fs = require('fs');
-var tmplFilter = fs.readFileSync(__dirname + '/../templates/filter.tmpl', 'utf8');
+var tmplFilter = fs.readFileSync(__dirname + '/filter.html', 'utf8');
 
 var dateLocale = {
   applyLabel: 'Применить',

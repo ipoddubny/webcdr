@@ -1,3 +1,7 @@
+const TABLE_NAME = 'cdrview';
+
+/****/
+
 var router = require('express').Router();
 
 var path = require('path');
@@ -9,7 +13,7 @@ var _ = require('lodash');
 var ExcelExport = require('excel-export');
 
 var CDR = Bookshelf.Model.extend({
-  tableName: 'cdr'
+  tableName: TABLE_NAME
 });
 
 function prepareXlsx (collection) {
@@ -62,6 +66,12 @@ router.get('/cdrs', function (req, res) {
         req.query.end || moment().endOf('day').toJSON()
       ]);
     }).andWhere(function () {
+      if (req.query.direction) {
+        this.where('direction', '=', req.query.direction);
+      } else {
+        this.whereRaw('1=1');
+      }
+    }).andWhere(function () {
       if (req.user.acl) {
         this.where(function () {
           this.whereIn('src', req.user.acl);
@@ -74,7 +84,7 @@ router.get('/cdrs', function (req, res) {
     });
   };
 
-  var countPromise = Bookshelf.knex('cdr').count('*');
+  var countPromise = Bookshelf.knex(TABLE_NAME).count('*');
   filter.call(countPromise);
 
   var dataPromise = CDR.collection()

@@ -7,13 +7,12 @@ audiojs.events.ready(function() {
 var app = new Backbone.Marionette.Application();
 window.app = app;
 
-var CDRView = require('./views/CDRView');
 var NavbarView = require('./views/NavbarView');
 var LoadingView = require('./views/LoadingView');
+
+require('./cdr');
 var ReportView = require('./views/ReportView');
 var AdminView = require('./views/AdminView');
-
-var CDR = require('./CDR');
 
 app.addRegions({
   navigation: '#navigation',
@@ -66,17 +65,6 @@ app.addInitializer(function () {
   });
 });
 
-app.showCDR = function () {
-  var self = this;
-  self.cdrs = new CDR();
-
-  var cdrView = new CDRView({
-    collection: self.cdrs
-  });
-  self.cdrs.fetch().then(function () {
-    self.main.show(cdrView);
-  });
-};
 
 app.on("initialize:after", function(options){
   if (Backbone.history) {
