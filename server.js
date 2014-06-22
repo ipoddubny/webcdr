@@ -18,18 +18,7 @@ Bookshelf.db = Bookshelf.initialize({
 });
 
 var _ = require('lodash');
-var testUsers = [{
-  id: 1,
-  username: 'admin',
-  password: 'admin',
-  admin: true
-}, {
-  id: 2,
-  username: 'test',
-  password: 'test',
-  acl: ['89266079312'],
-  admin: false
-}];
+var users = require('./users');
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -38,14 +27,13 @@ passport.serializeUser(function (user, done) {
 });
 passport.deserializeUser(function (id, done) {
   process.nextTick(function () {
-    var user = _.find(testUsers, {id: id});
+    var user = _.find(users, {id: id});
     done(null, user);
   });
 });
-
 passport.use(new LocalStrategy(
   function (username, password, done) {
-    var user = _.find(testUsers, {username: username, password: password});
+    var user = _.find(users, {username: username, password: password});
     if (user) {
       done(null, user);
     } else {
@@ -95,6 +83,9 @@ app.get('/profile', function (req, res) {
   res.send(req.user);
 });
 
+app.use('/admin', ensureAdmin);
+app.use('/admin', require('./admin'));
+
 app.use(express.static(__dirname + '/public'));
 
 app.listen(process.env.PORT || 9030);
@@ -104,4 +95,14 @@ function ensureAuthenticated (req, res, next) {
     res.redirect('/login');
   }
   next();
+}
+
+function ensureAdmin (req, res, next) {
+  ensureAuthenticated(req, res, function () {
+    if (!req.user.admin) {
+      res.json({error: 'access denied'});
+    } else {
+      next();
+    }
+  });
 }

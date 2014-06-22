@@ -6,7 +6,7 @@ var NavbarView = require('./views/NavbarView');
 
 require('./cdr');
 require('./report');
-var AdminView = require('./views/AdminView');
+require('./admin');
 
 app.addRegions({
   navigation: '#navigation',
@@ -20,7 +20,7 @@ app.addInitializer(function () {
     target: 'cdr',
     active: true
   }, {
-    name: 'Сводный отчёт',
+    name: 'Входящие',
     target: 'report'
   }]);
 
@@ -52,7 +52,7 @@ app.addInitializer(function () {
         this.showReport();
         break;
       case 'admin':
-        this.main.show(new AdminView());
+        this.showAdmin();
         break;
     }
   });
