@@ -1,8 +1,4 @@
-moment.lang('ru');
-
-audiojs.events.ready(function() {
-  var as = audiojs.createAll();
-});
+require('./plugins');
 
 var app = new Backbone.Marionette.Application();
 window.app = app;
