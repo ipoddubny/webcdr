@@ -108,7 +108,8 @@ var CDRView = Marionette.LayoutView.extend({
   onShow: function () {
     var gridView = new Backgrid.Grid({
       columns: columns,
-      collection: this.collection
+      collection: this.collection,
+      className: 'backgrid backgrid-striped'
     });
     var paginatorView = new Backgrid.Extension.Paginator({
       collection: this.collection
