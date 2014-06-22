@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
+var LeveldbStore = require('connect-leveldb')(session);
 
 var Bookshelf = require('bookshelf');
 Bookshelf.db = Bookshelf.initialize({
@@ -59,6 +60,9 @@ app.use(compress());
 app.use(bodyParser());
 app.use(cookieParser());
 app.use(session({
+  store: new LeveldbStore({
+    dbLocation: '/tmp/webcdr_sessions.db'
+  }),
   secret: '123hjhfds7&&&kjfh&&&788'
 }));
 app.use(passport.initialize());
