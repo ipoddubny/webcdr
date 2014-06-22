@@ -143,4 +143,30 @@ router.get('/recordings/:id', function (req, res) {
   });
 });
 
+/*****************/
+
+router.get('/summary', function (req, res) {
+  var knex = Bookshelf.knex;
+  knex(TABLE_NAME)
+    .select(
+      knex.raw('weekday(calldate) as day'),
+      knex.raw('count(*) as calls')
+    )
+    .where('direction', '=', 'in')
+    .groupBy('day')
+    .then(function (data) {
+      var result = [];
+
+      for (var i = 0; i < 7; i++) {
+        result[i] = {day: i, calls: 0};
+      }
+
+      _.each(data, function (row) {
+        result[row.day] = row;
+      });
+
+      res.json(result);
+    });
+});
+
 module.exports = router;

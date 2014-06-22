@@ -21,10 +21,10 @@ var ItemView = Marionette.ItemView.extend({
 
 var NavbarView = Marionette.CompositeView.extend({
   template: _.template(tmpl),
-  itemView: ItemView,
-  itemViewContainer: '.js-list',
+  childView: ItemView,
+  childViewContainer: '.js-list',
   className: 'navbar navbar-inverse navbar-fixed-top',
-  onItemviewClick: function (view, target) {
+  onChildviewClick: function (view, target) {
     this.collection.each(function (model) {
       model.set('active', false);
     });

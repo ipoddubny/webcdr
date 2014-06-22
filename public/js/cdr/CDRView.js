@@ -97,7 +97,7 @@ var ExportLinkView = Marionette.ItemView.extend({
   }
 });
 
-var CDRView = Marionette.Layout.extend({
+var CDRView = Marionette.LayoutView.extend({
   template: _.template(tmpl),
   regions: {
     filters: '#filters',

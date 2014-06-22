@@ -5,7 +5,7 @@ var app = window.app = new Backbone.Marionette.Application();
 var NavbarView = require('./views/NavbarView');
 
 require('./cdr');
-var ReportView = require('./views/ReportView');
+require('./report');
 var AdminView = require('./views/AdminView');
 
 app.addRegions({
@@ -49,7 +49,7 @@ app.addInitializer(function () {
         this.showCDR();
         break;
       case 'report':
-        this.main.show(new ReportView());
+        this.showReport();
         break;
       case 'admin':
         this.main.show(new AdminView());
@@ -59,7 +59,7 @@ app.addInitializer(function () {
 });
 
 
-app.on("initialize:after", function(options){
+app.on("start", function(options){
   if (Backbone.history) {
     Backbone.history.start();
   }
