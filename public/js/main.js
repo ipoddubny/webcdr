@@ -1,10 +1,8 @@
 require('./plugins');
 
-var app = new Backbone.Marionette.Application();
-window.app = app;
+var app = window.app = new Backbone.Marionette.Application();
 
 var NavbarView = require('./views/NavbarView');
-var LoadingView = require('./views/LoadingView');
 
 require('./cdr');
 var ReportView = require('./views/ReportView');
@@ -16,7 +14,6 @@ app.addRegions({
 });
 
 app.addInitializer(function () {
-  app.main.show(new LoadingView());
 
   app.navcol = new Backbone.Collection([{
     name: 'Звонки',
