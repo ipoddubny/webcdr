@@ -144,21 +144,42 @@ router.get('/recordings/:id', function (req, res) {
 });
 
 /*****************/
+var groups = require('./groups');
+
+function prepareSummaryQuerySelect (knex) {
+  var args = _.map(groups, function (group) {
+    return knex.raw('SUM(dst BETWEEN ' + group.from + ' AND ' + group.to + ') as ' + group.name);
+  });
+
+  args = [
+    knex.raw('weekday(calldate) as day'),
+    knex.raw('count(*) as calls')
+  ].concat(args);
+
+  return args;
+}
 
 router.get('/summary', function (req, res) {
   var knex = Bookshelf.knex;
-  knex(TABLE_NAME)
-    .select(
-      knex.raw('weekday(calldate) as day'),
-      knex.raw('count(*) as calls')
-    )
+
+  var querySelect = prepareSummaryQuerySelect(knex);
+
+  var knexTable = knex(TABLE_NAME);
+
+  knexTable
+    .select.apply(knexTable, querySelect)
     .where('direction', '=', 'in')
     .groupBy('day')
     .then(function (data) {
       var result = [];
 
+      var nullData = { calls: 0 };
+      _.each(groups, function (group) {
+        nullData[group.name] = 0;
+      });
+
       for (var i = 0; i < 7; i++) {
-        result[i] = {day: i, calls: 0};
+        result[i] = _.extend({ day: i }, nullData);
       }
 
       _.each(data, function (row) {
