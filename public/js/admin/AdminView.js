@@ -1,16 +1,19 @@
 'use strict';
-//var fs = require('fs');
-//var tmpl = fs.readFileSync(__dirname + '/../templates/cdr.tmpl', 'utf8');
+
+var fs = require('fs');
+
+var rowTemplate = fs.readFileSync(__dirname + '/row.html', 'utf8');
+var tableTemplate = fs.readFileSync(__dirname + '/table.html', 'utf8');
 
 var RowView = Marionette.ItemView.extend({
   tagName: 'tr',
-  template: _.template('<td><%=username%></td><td><input type="checkbox" <%= admin?"checked":"" %> disabled></td>')
+  template: _.template(rowTemplate)
 });
 
 var GridView = Marionette.CompositeView.extend({
   tagName: 'table',
   className: 'table',
-  template: _.template('<thead><tr><th>Пользователь</th><th>Администратор</th></tr><thead><tbody></tbody>'),
+  template: _.template(tableTemplate),
   childView: RowView,
   childViewElement: 'tbody'
 });
