@@ -11,9 +11,14 @@ app.addInitializer(function () {
 
   var report = self.report = new Report();
 
+  var filter = new Backbone.Model();
+
   self.showReport = function () {
     report.fetch().then(function () {
-      self.main.show(new ReportView({collection: report}));
+      self.main.show(new ReportView({
+        collection: report,
+        filter: filter
+      }));
     });
   };
 });

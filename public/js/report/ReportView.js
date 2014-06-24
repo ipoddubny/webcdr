@@ -1,7 +1,7 @@
 'use strict';
 
 var fs = require('fs');
-var tmpl = fs.readFileSync(__dirname + '/report.html', 'utf8');
+var layoutTemplate = fs.readFileSync(__dirname + '/report.html', 'utf8');
 
 var days = [
   'Понедельник',
@@ -39,13 +39,27 @@ var GridView = Marionette.CompositeView.extend({
   childView: RowView
 });
 
-var ReportView = Marionette.ItemView.extend({
-  template: _.template(tmpl),
+var FiltersView = Marionette.ItemView.extend({
+  template: _.template('<!-- no filters yet, sorry -->')
+});
+
+var ReportView = Marionette.LayoutView.extend({
+  template: _.template(layoutTemplate),
   className: 'container',
-  onRender: function () {
-    this.$('.grid').html(new GridView({
+  regions: {
+    filters: '.filters',
+    grid: '.grid'
+  },
+  initialize: function (options) {
+    this.filter = options.filter;
+  },
+  onShow: function () {
+    this.filters.show(new FiltersView({
+      model: this.filter
+    }));
+    this.grid.show(new GridView({
       collection: this.collection
-    }).render().el);
+    }));
   }
 });
 
