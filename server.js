@@ -6,16 +6,10 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var LeveldbStore = require('connect-leveldb')(session);
 
+var config = require('./config');
+
 var Bookshelf = require('bookshelf');
-Bookshelf.db = Bookshelf.initialize({
-  client: 'mysql',
-  connection: {
-    host: 'localhost',
-    user: 'root',
-    password: '123321',
-    database: 'asteriskcdrdb'
-  }
-});
+Bookshelf.db = Bookshelf.initialize(config.db);
 
 var _ = require('lodash');
 var users = require('./users');
@@ -49,9 +43,9 @@ app.use(bodyParser());
 app.use(cookieParser());
 app.use(session({
   store: new LeveldbStore({
-    dbLocation: '/tmp/webcdr_sessions.db'
+    dbLocation: config.sessionDatabase
   }),
-  secret: '123hjhfds7&&&kjfh&&&788'
+  secret: config.sessionKey
 }));
 app.use(passport.initialize());
 app.use(passport.session());
