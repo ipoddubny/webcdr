@@ -1,3 +1,9 @@
+'use strict';
+
+var _ = require('underscore');
+var Marionette = require('marionette');
+var moment = require('moment');
+
 var fs = require('fs');
 var tmplFilter = fs.readFileSync(__dirname + '/filter.html', 'utf8');
 
@@ -44,7 +50,7 @@ var FilterView = Marionette.ItemView.extend({
     }, 300);
   },
   onSelectStatus: function () {
-    this.filter.status = this.ui.status.val();;
+    this.filter.status = this.ui.status.val();
     this.trigger('search', this.filter);
   },
   onSelectDate: function (start, end) {

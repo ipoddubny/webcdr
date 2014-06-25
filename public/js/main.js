@@ -1,6 +1,10 @@
+var _ = require('underscore');
+var Backbone = require('backbone');
+var Marionette = require('marionette');
+
 require('./plugins');
 
-var app = window.app = new Backbone.Marionette.Application();
+var app = window.app = new Marionette.Application();
 
 var NavbarView = require('./views/NavbarView');
 

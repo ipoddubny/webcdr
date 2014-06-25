@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('underscore');
+var Marionette = require('marionette');
 var fs = require('fs');
 var layoutTemplate = fs.readFileSync(__dirname + '/report.html', 'utf8');
 

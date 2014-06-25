@@ -1,3 +1,9 @@
+'use strict';
+
+var _ = require('underscore');
+var Marionette = require('marionette');
+var Spinner = require('spin.js');
+
 var LoadingView = Marionette.ItemView.extend({
   template: _.template(''),
   className: 'container',

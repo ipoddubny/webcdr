@@ -1,5 +1,8 @@
 'use strict';
 
+var _ = require('underscore');
+var Marionette = require('marionette');
+
 var fs = require('fs');
 
 var rowTemplate = fs.readFileSync(__dirname + '/row.html', 'utf8');

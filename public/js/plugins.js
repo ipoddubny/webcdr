@@ -1,3 +1,6 @@
+var moment = require('moment');
+var audiojs = require('audiojs');
+
 // Avoid `console` errors in browsers that lack a console.
 (function() {
   var method;
