@@ -47,7 +47,8 @@
     "bootstrap-select": "./public/bower_components/bootstrap-select/bootstrap-select.min.js",
     "marionette": "./public/bower_components/marionette/lib/backbone.marionette.js",
     "backgrid-paginator": "./public/js/vendor/backgrid-paginator.js",
-    "backbone.paginator": "./public/bower_components/backbone.paginator/lib/backbone.paginator.js"
+    "backbone.paginator": "./public/bower_components/backbone.paginator/lib/backbone.paginator.js",
+    "backgrid": "./public/bower_components/backgrid/lib/backgrid.js"
   },
   "browserify-shim": {
     "jquery": "global:$",
@@ -57,7 +58,6 @@
     "moment": "moment",
     "audiojs": "audiojs",
     "spin.js": "Spinner",
-    "backgrid": "global:Backgrid",
     "bootstrap-daterangepicker": {
       "depends": ["moment"]
     },
