@@ -134,10 +134,13 @@ router.param('id', /^\d+$/);
 router.get('/recordings/:id', function (req, res) {
   CDR.forge({id: req.params.id}).fetch().then(function (cdr) {
     var date = moment(cdr.get('calldate'));
-    var filepath = path.join('./recordings', ''+date.year(), ''+date.month(), ''+date.date(), '*' + cdr.get('uniqueid') + '.mp3');
+    var filepath = path.join('./recordings', ''+date.year(), ''+date.format('MM'), ''+date.format('DD'), '*' + cdr.get('uniqueid') + '.mp3');
     glob(filepath, function (er, files) {
       if (_.isArray(files) && files.length) {
         res.sendfile(files[0]);
+      } else {
+        res.status(404);
+        res.json({error: 'file not found'});
       }
     });
   });
