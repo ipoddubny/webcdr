@@ -4,6 +4,7 @@ var _ = require('underscore');
 var Marionette = require('marionette');
 var moment = require('moment');
 require('bootstrap-daterangepicker');
+require('bootstrap-select');
 
 var fs = require('fs');
 var tmplFilter = fs.readFileSync(__dirname + '/filter.html', 'utf8');

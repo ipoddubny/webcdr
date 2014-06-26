@@ -43,7 +43,8 @@
     "spin.js": "./public/bower_components/spin.js/spin.js",
     "audiojs": "./public/bower_components/audiojs/audiojs/audio.js",
     "moment": "./public/bower_components/moment/min/moment-with-langs.min.js",
-    "bootstrap-daterangepicker": "./public/bower_components/bootstrap-daterangepicker/daterangepicker.js"
+    "bootstrap-daterangepicker": "./public/bower_components/bootstrap-daterangepicker/daterangepicker.js",
+    "bootstrap-select": "./public/bower_components/bootstrap-select/bootstrap-select.min.js"
   },
   "browserify-shim": {
     "jquery": "global:$",
@@ -56,6 +57,7 @@
     "backgrid": "global:Backgrid",
     "bootstrap-daterangepicker": {
       "depends": ["moment"]
-    }
+    },
+    "bootstrap-select": {}
   }
 }
