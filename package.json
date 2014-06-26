@@ -39,6 +39,9 @@
       "browserify-shim"
     ]
   },
+  "browser": {
+    "spin.js": "./public/bower_components/spin.js/spin.js"
+  },
   "browserify-shim": {
     "jquery": "global:$",
     "underscore": "global:_",
@@ -46,7 +49,7 @@
     "marionette": "global:Marionette",
     "moment": "global:moment",
     "audiojs": "global:audiojs",
-    "spin.js": "global:Spinner",
+    "spin.js": "Spinner",
     "backgrid": "global:Backgrid"
   }
 }
