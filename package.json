@@ -45,7 +45,9 @@
     "moment": "./public/bower_components/moment/min/moment-with-langs.min.js",
     "bootstrap-daterangepicker": "./public/bower_components/bootstrap-daterangepicker/daterangepicker.js",
     "bootstrap-select": "./public/bower_components/bootstrap-select/bootstrap-select.min.js",
-    "marionette": "./public/bower_components/marionette/lib/backbone.marionette.js"
+    "marionette": "./public/bower_components/marionette/lib/backbone.marionette.js",
+    "backgrid-paginator": "./public/js/vendor/backgrid-paginator.js",
+    "backbone.paginator": "./public/bower_components/backbone.paginator/lib/backbone.paginator.js"
   },
   "browserify-shim": {
     "jquery": "global:$",
@@ -60,6 +62,7 @@
       "depends": ["moment"]
     },
     "bootstrap-select": {},
-    "marionette": "Marionette"
+    "marionette": "Marionette",
+    "backbone.paginator": {}
   }
 }

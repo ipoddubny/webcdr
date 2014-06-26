@@ -6,6 +6,7 @@ var Marionette = require('marionette');
 var moment = require('moment');
 var audiojs = require('audiojs');
 var Backgrid = require('backgrid');
+require('backgrid-paginator');
 
 var fs = require('fs');
 var tmpl = fs.readFileSync(__dirname + '/cdr.html', 'utf8');
