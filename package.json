@@ -44,7 +44,8 @@
     "audiojs": "./public/bower_components/audiojs/audiojs/audio.js",
     "moment": "./public/bower_components/moment/min/moment-with-langs.min.js",
     "bootstrap-daterangepicker": "./public/bower_components/bootstrap-daterangepicker/daterangepicker.js",
-    "bootstrap-select": "./public/bower_components/bootstrap-select/bootstrap-select.min.js"
+    "bootstrap-select": "./public/bower_components/bootstrap-select/bootstrap-select.min.js",
+    "marionette": "./public/bower_components/marionette/lib/backbone.marionette.js"
   },
   "browserify-shim": {
     "jquery": "global:$",
@@ -58,6 +59,7 @@
     "bootstrap-daterangepicker": {
       "depends": ["moment"]
     },
-    "bootstrap-select": {}
+    "bootstrap-select": {},
+    "marionette": "Marionette"
   }
 }
