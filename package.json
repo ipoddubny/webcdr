@@ -40,7 +40,8 @@
     ]
   },
   "browser": {
-    "spin.js": "./public/bower_components/spin.js/spin.js"
+    "spin.js": "./public/bower_components/spin.js/spin.js",
+    "audiojs": "./public/bower_components/audiojs/audiojs/audio.js"
   },
   "browserify-shim": {
     "jquery": "global:$",
@@ -48,7 +49,7 @@
     "backbone": "global:Backbone",
     "marionette": "global:Marionette",
     "moment": "global:moment",
-    "audiojs": "global:audiojs",
+    "audiojs": "audiojs",
     "spin.js": "Spinner",
     "backgrid": "global:Backgrid"
   }
