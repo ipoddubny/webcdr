@@ -41,16 +41,21 @@
   },
   "browser": {
     "spin.js": "./public/bower_components/spin.js/spin.js",
-    "audiojs": "./public/bower_components/audiojs/audiojs/audio.js"
+    "audiojs": "./public/bower_components/audiojs/audiojs/audio.js",
+    "moment": "./public/bower_components/moment/min/moment-with-langs.min.js",
+    "bootstrap-daterangepicker": "./public/bower_components/bootstrap-daterangepicker/daterangepicker.js"
   },
   "browserify-shim": {
     "jquery": "global:$",
     "underscore": "global:_",
     "backbone": "global:Backbone",
     "marionette": "global:Marionette",
-    "moment": "global:moment",
+    "moment": "moment",
     "audiojs": "audiojs",
     "spin.js": "Spinner",
-    "backgrid": "global:Backgrid"
+    "backgrid": "global:Backgrid",
+    "bootstrap-daterangepicker": {
+      "depends": ["moment"]
+    }
   }
 }
