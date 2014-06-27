@@ -51,7 +51,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/login', function (req, res) {
-  res.sendfile('./public/login.html');
+  res.sendfile(__dirname + '/public/login.html');
 });
 app.post('/login',
   passport.authenticate('local', {
@@ -69,7 +69,7 @@ app.use('/api', require('./api'));
 
 app.get('/', ensureAuthenticated);
 app.get('/', function (req, res) {
-  res.sendfile('./public/index.html');
+  res.sendfile(__dirname + '/public/index.html');
 });
 
 app.get('/profile', ensureAuthenticated);
