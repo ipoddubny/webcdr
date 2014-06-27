@@ -9,7 +9,7 @@ body {
 .audiojs {
 	height: 18px;
 	width: 200px;
-	background: #fff;
+	background: none;
 	box-shadow: none;
 }
 
