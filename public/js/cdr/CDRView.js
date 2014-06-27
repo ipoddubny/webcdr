@@ -1,5 +1,14 @@
-var fs = require('fs');
+'use strict';
 
+var $ = require('jquery');
+var _ = require('underscore');
+var Marionette = require('marionette');
+var moment = require('moment');
+var audiojs = require('audiojs');
+var Backgrid = require('backgrid');
+require('backgrid-paginator');
+
+var fs = require('fs');
 var tmpl = fs.readFileSync(__dirname + '/cdr.html', 'utf8');
 
 var FilterView = require('./FilterView');

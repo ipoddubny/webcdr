@@ -1,3 +1,8 @@
+'use strict';
+
+var _ = require('underscore');
+var Marionette = require('marionette');
+
 var fs = require('fs');
 var tmpl = fs.readFileSync(__dirname + '/../templates/navbar.tmpl', 'utf8');
 

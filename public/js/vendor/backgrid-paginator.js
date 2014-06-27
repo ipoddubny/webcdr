@@ -12,7 +12,7 @@
     module.exports = factory(require("underscore"),
                              require("backbone"),
                              require("backgrid"),
-                             require("backbone-pageable"));
+                             require("backbone.paginator"));
   }
   // Browser
   else {

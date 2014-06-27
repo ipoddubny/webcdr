@@ -1,5 +1,6 @@
 'use strict';
 
+var Backbone = require('backbone');
 var ReportView = require('./ReportView');
 
 app.addInitializer(function () {

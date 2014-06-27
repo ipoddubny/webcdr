@@ -1,5 +1,7 @@
 'use strict';
 
+var Backbone = require('backbone');
+
 var AdminView = require('./AdminView');
 
 app.addInitializer(function () {
