@@ -24,14 +24,16 @@ var dateLocale = {
 var FilterView = Marionette.ItemView.extend({
   template: _.template(tmplFilter),
   ui: {
-    'number': '#phone_filter',
+    'timerange': '#timerange',
     'status': '#status_filter',
-    'timerange': '#timerange'
+    'direction': '#direction_filter',
+    'number': '#phone_filter'
   },
   events: {
     'blur @ui.number': 'onChangeNumber',
     'keyup @ui.number': 'onChangeNumber',
-    'change @ui.status': 'onSelectStatus'
+    'change @ui.status': 'onSelectStatus',
+    'change @ui.direction': 'onSelectDirection'
   },
   filter: {},
   onChangeNumber: function () {
@@ -53,6 +55,10 @@ var FilterView = Marionette.ItemView.extend({
   },
   onSelectStatus: function () {
     this.filter.status = this.ui.status.val();
+    this.trigger('search', this.filter);
+  },
+  onSelectDirection: function () {
+    this.filter.direction = this.ui.direction.val();
     this.trigger('search', this.filter);
   },
   onSelectDate: function (start, end) {
