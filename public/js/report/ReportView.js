@@ -4,6 +4,7 @@ var _ = require('underscore');
 var Marionette = require('marionette');
 var fs = require('fs');
 var layoutTemplate = fs.readFileSync(__dirname + '/report.html', 'utf8');
+var moment = require('moment');
 
 var days = [
   'Понедельник',
@@ -41,8 +42,32 @@ var GridView = Marionette.CompositeView.extend({
   childView: RowView
 });
 
+require('bootstrap-datepicker');
+var tmplFilter = fs.readFileSync(__dirname + '/filter.html', 'utf8');
 var FiltersView = Marionette.ItemView.extend({
-  template: _.template('<!-- no filters yet, sorry -->')
+  template: _.template(tmplFilter),
+  events: {
+    'change .datepicker': 'onChange'
+  },
+  onChange: function () {
+    // FIXME костылище
+    var bounds = this.$('.datepicker').val().split(' - ');
+    if (bounds && bounds.length === 2) {
+      var dates = _.map(bounds, function (str) {
+        return moment(str, 'DD/MM/YYYY').toISOString();
+      });
+      this.model.set({
+        from_date: dates[0],
+        to_date: dates[1]
+      });
+    }
+  },
+  onRender: function () {
+    this.$('.datepicker').datepicker({
+      language: 'ru',
+      selectWeek: true
+    });
+  }
 });
 
 var ReportView = Marionette.LayoutView.extend({

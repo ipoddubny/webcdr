@@ -14,6 +14,12 @@ app.addInitializer(function () {
 
   var filter = new Backbone.Model();
 
+  self.listenTo(filter, 'change', function () {
+    report.fetch({
+      data: filter.toJSON()
+    });
+  });
+
   self.showReport = function () {
     report.fetch().then(function () {
       self.main.show(new ReportView({
