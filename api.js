@@ -137,6 +137,8 @@ router.get('/recordings/:id', function (req, res) {
     var filepath = path.join('./recordings', ''+date.year(), ''+date.format('MM'), ''+date.format('DD'), '*' + cdr.get('uniqueid') + '.mp3');
     glob(filepath, function (er, files) {
       if (_.isArray(files) && files.length) {
+        var filename = [date.format('YYYY-MM-DD-HHmm'), cdr.get('src'), cdr.get('dst')].join('_');
+        res.setHeader('Content-disposition', 'attachment; filename=' + filename);
         res.sendfile(files[0]);
       } else {
         res.status(404);
