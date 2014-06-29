@@ -85,7 +85,9 @@ app.on("start", function(options){
     Backbone.history.start();
   }
 
-  this.showCDR();
+  if (Backbone.history.fragment === '') {
+    app.router.navigate('cdr', { trigger: true });
+  }
 });
 
 app.start();
