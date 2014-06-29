@@ -49,18 +49,33 @@ app.addInitializer(function () {
     }
   });
 
-  app.listenTo(app.navbar, 'navigate', function (target) {
-    switch (target) {
-      case 'cdr':
-        this.showCDR();
-        break;
-      case 'report':
-        this.showReport();
-        break;
-      case 'admin':
-        this.showAdmin();
-        break;
+  var controller = {
+    'changeTab': function (tab) {
+      app.navbar.setActive(tab);
+      switch (tab) {
+        case 'cdr':
+          app.showCDR();
+          break;
+        case 'report':
+          app.showReport();
+          break;
+        case 'admin':
+          app.showAdmin();
+          break;
+      }
     }
+  };
+
+  app.router = new Marionette.AppRouter({
+    controller: controller,
+    appRoutes: {
+      ':tab': 'changeTab'
+    }
+  });
+
+  this.listenTo(app.navbar, 'navigate', function (target) {
+    app.router.navigate(target);
+    controller.changeTab(target);
   });
 });
 

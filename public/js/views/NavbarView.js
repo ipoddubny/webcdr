@@ -30,11 +30,12 @@ var NavbarView = Marionette.CompositeView.extend({
   childViewContainer: '.js-list',
   className: 'navbar navbar-inverse navbar-fixed-top',
   onChildviewClick: function (view, target) {
-    this.collection.each(function (model) {
-      model.set('active', false);
-    });
-    view.model.set('active', true);
     this.trigger('navigate', target);
+  },
+  setActive: function (target) {
+    this.collection.each(function (model) {
+      model.set('active', model.get('target') === target);
+    });
   }
 });
 
