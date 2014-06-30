@@ -34,7 +34,7 @@ router.get('/cdrs', function (req, res) {
       ]);
     }).andWhere(function () {
       if (req.query.direction) {
-        this.where('direction', '=', req.query.direction);
+        this.whereIn('direction',  req.query.direction);
       } else {
         this.whereRaw('1=1');
       }
