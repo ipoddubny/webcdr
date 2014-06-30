@@ -174,6 +174,12 @@ router.get('/summary', function (req, res) {
   knexTable
     .select.apply(knexTable, querySelect)
     .where('direction', '=', 'in')
+    .andWhere(function () {
+      this.whereBetween('calldate', [
+        req.query.from_date || moment().startOf('day').toJSON(),
+        req.query.to_date || moment().endOf('day').toJSON()
+      ]);
+    })
     .groupBy('day')
     .then(function (data) {
       var result = [];

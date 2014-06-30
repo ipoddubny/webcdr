@@ -519,12 +519,6 @@ var jQuery = require('jquery');
 
 			var lang = this.o.language;
       var dates = this.dates;
-      if (this.o.selectWeek) {
-        var startDate = moment(this.dates[0]).startOf('week');
-        var endDate = moment(this.dates[0]).endOf('week');
-        var format = 'DD/MM/YYYY';
-        return [startDate.format(format), endDate.format(format)].join(' - ');
-      }
       return $.map(dates, function(d){
         return DPGlobal.formatDate(d, format, lang);
       }).join(this.o.multidateSeparator);
