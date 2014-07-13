@@ -21,13 +21,22 @@ var GridView = Marionette.CompositeView.extend({
   childViewElement: 'tbody'
 });
 
+var ToolbarView = Marionette.ItemView.extend({
+  template: _.template('<div class="btn btn-default js-add"><span class="glyphicon glyphicon-plus"></span> Добавить</div>')
+});
+
 var AdminView = Marionette.LayoutView.extend({
   className: 'container',
-  template: _.template('<div class="grid">'),
+  template: _.template('<div class="toolbar"></div><div class="grid"></div>'),
+  regions: {
+    toolbar: '.toolbar',
+    grid: '.grid'
+  },
   onRender: function () {
-    this.$('.grid').html(new GridView({
+    this.toolbar.show(new ToolbarView());
+    this.grid.show(new GridView({
       collection: this.collection
-    }).render().el);
+    }));
   }
 });
 
