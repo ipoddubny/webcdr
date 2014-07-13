@@ -1,7 +1,7 @@
 <form class="form-horizontal">
 	<div class="form-group">
-		<label for="timerange" class="control-label col-sm-2">Время</label>
-		<div class="col-sm-10">
+		<label for="timerange" class="control-label col-sm-3">Время</label>
+		<div class="col-sm-9">
 			<div class="controls">
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span><input type="text" id="timerange" class="form-control" />
@@ -10,8 +10,8 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="status_filter" class="control-label col-sm-2">Статус</label>
-		<div class="col-sm-10">
+		<label for="status_filter" class="control-label col-sm-3">Статус</label>
+		<div class="col-sm-9">
 			<select class="selectpicker span2" id="status_filter" multiple>
 				<option value="ANSWERED">Отвечен</option>
 				<option value="NO ANSWER">Не отвечен</option>
@@ -20,8 +20,8 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="direction_filter" class="control-label col-sm-2">Направление</label>
-		<div class="col-sm-10">
+		<label for="direction_filter" class="control-label col-sm-3">Направление</label>
+		<div class="col-sm-9">
 			<select class="selectpicker span2" id="direction_filter" multiple>
 				<option value="in">Входящие</option>
 				<option value="out">Исходящие</option>
@@ -30,9 +30,20 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="phone_filter" class="control-label col-sm-2">Телефон</label>
-		<div class="col-sm-10">
+		<label for="phone_filter" class="control-label col-sm-3">Телефон</label>
+		<div class="col-sm-9">
 			<input class="phone form-control" id="phone_filter" placeholder=""/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="per_page" class="control-label col-sm-3">Записей на странице</label>
+		<div class="col-sm-9">
+			<select class="selectpicker span2" id="per_page">
+				<option>20</option>
+				<option>50</option>
+				<option>100</option>
+				<option>1000</option>
+			</select>
 		</div>
 	</div>
 </form>

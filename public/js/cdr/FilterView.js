@@ -27,13 +27,15 @@ var FilterView = Marionette.ItemView.extend({
     'timerange': '#timerange',
     'status': '#status_filter',
     'direction': '#direction_filter',
-    'number': '#phone_filter'
+    'number': '#phone_filter',
+    'perpage': '#per_page'
   },
   events: {
     'blur @ui.number': 'onChangeNumber',
     'keyup @ui.number': 'onChangeNumber',
     'change @ui.status': 'onSelectStatus',
-    'change @ui.direction': 'onSelectDirection'
+    'change @ui.direction': 'onSelectDirection',
+    'change @ui.perpage': 'onSelectPerPage'
   },
   filter: {},
   onChangeNumber: function () {
@@ -59,6 +61,10 @@ var FilterView = Marionette.ItemView.extend({
   },
   onSelectDirection: function () {
     this.filter.direction = this.ui.direction.val();
+    this.trigger('search', this.filter);
+  },
+  onSelectPerPage: function () {
+    this.filter.per_page = this.ui.perpage.val();
     this.trigger('search', this.filter);
   },
   onSelectDate: function (start, end) {
