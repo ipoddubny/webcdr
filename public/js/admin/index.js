@@ -2,12 +2,14 @@
 
 var Backbone = require('backbone');
 
+var User = require('./User');
 var AdminView = require('./AdminView');
 
 app.addInitializer(function () {
   var self = this;
 
   var Users = Backbone.Collection.extend({
+    model: User,
     url: '/admin/users'
   });
 

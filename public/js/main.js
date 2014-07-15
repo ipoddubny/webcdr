@@ -14,9 +14,22 @@ require('./cdr');
 require('./report');
 require('./admin');
 
+var ModalRegion = Marionette.Region.extend({
+  el: '#modal',
+
+  onShow: function (view) {
+    this.$el.find('.modal').modal();
+  },
+
+  hide: function () {
+    this.$el.find('.modal').modal('hide');
+  }
+});
+
 app.addRegions({
   navigation: '#navigation',
-  main: '#main'
+  main: '#main',
+  modal: ModalRegion
 });
 
 app.addInitializer(function () {

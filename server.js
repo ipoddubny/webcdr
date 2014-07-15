@@ -17,11 +17,11 @@ var users = require('./users');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 passport.serializeUser(function (user, done) {
-  done(null, user.id);
+  done(null, user.username);
 });
-passport.deserializeUser(function (id, done) {
+passport.deserializeUser(function (username, done) {
   process.nextTick(function () {
-    var user = _.find(users, {id: id});
+    var user = _.find(users, {username: username});
     done(null, user);
   });
 });
