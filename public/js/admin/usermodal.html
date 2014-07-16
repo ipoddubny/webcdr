@@ -5,6 +5,8 @@
       <h4 class="modal-title"><%=title %></h4>
 		</div>
 		<div class="modal-body">
+      <input type="hidden" name="id" value="<%=id%>">
+      <input type="hidden" name="admin" value="<%=admin?'1':'0'%>">
       <div class="form-horizontal">
         <div class="form-group">
           <label class="col-sm-2 control-label" for="name">Имя</label>

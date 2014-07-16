@@ -5,6 +5,8 @@
   "main": "server.js",
   "scripts": {
     "watch": "watchify public/js/main.js -d -o public/js/build/bundle.js -v",
+    "watchnd": "watchify public/js/main.js -o public/js/build/bundle.js -v",
+    "build": "browserify public/js/main.js -o public/js/build/bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ivan Poddubny <ivan.poddubny@gmail.com>",
@@ -14,8 +16,8 @@
     "brfs": "~1.1.1",
     "compression": "~1.0.6",
     "mysql": "~2.3.2",
-    "knex": "~0.5.15",
-    "bookshelf": "~0.6.12",
+    "knex": "~0.6.22",
+    "bookshelf": "~0.7.6",
     "bluebird": "~2.1.1",
     "moment": "~2.7.0",
     "lodash": "~2.4.1",

@@ -38,10 +38,12 @@ var UserModalView = Marionette.ItemView.extend({
   className: 'modal fade',
   template: _.template(modalTemplate),
   ui: {
+    'id': 'input[name="id"]',
     'name': 'input[name="name"]',
     'username': 'input[name="username"]',
     'password': 'input[name="password"]',
-    'acl': 'input[name="acl"]'
+    'acl': 'input[name="acl"]',
+    'admin': 'input[name="admin"]'
   },
   events: {
     'click .js-save': 'onSave'
@@ -55,6 +57,7 @@ var UserModalView = Marionette.ItemView.extend({
           return '';
         }
       },
+      id: this.model.id || '',
       title: this.title
     };
   },
@@ -63,6 +66,9 @@ var UserModalView = Marionette.ItemView.extend({
   },
   onSave: function () {
     var fields = {
+      id: function (val) {
+        return (!val) || (val == parseInt(val, 10));
+      },
       name: function (val) {
         return val.length;
       },
@@ -74,6 +80,9 @@ var UserModalView = Marionette.ItemView.extend({
       },
       acl: function (val) {
         return val.length === 0 || val.match(/^\d+(,\d*)*$/);
+      },
+      admin: function (val) {
+        return true;
       }
     };
     var valid = true;
@@ -89,6 +98,10 @@ var UserModalView = Marionette.ItemView.extend({
       }
     }, this);
     if (valid) {
+      if (!user.id) {
+        delete user.id;
+      }
+      user.admin = !!parseInt(user.admin,10);
       user.acl = user.acl.length ? user.acl.split(',') : undefined;
       this.trigger('save', new User(user));
     }

@@ -5,7 +5,8 @@ var config = {
       host: 'localhost',
       user: 'root',
       password: '123321',
-      database: 'asteriskcdrdb'
+      database: 'asteriskcdrdb',
+      charset: 'utf8'
     }
   },
   sessionKey: '123hjhfds7&&&kjfh&&&788',

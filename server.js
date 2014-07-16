@@ -17,22 +17,37 @@ var users = require('./users');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 passport.serializeUser(function (user, done) {
-  done(null, user.username);
+  done(null, user.id);
 });
-passport.deserializeUser(function (username, done) {
-  process.nextTick(function () {
-    var user = _.find(users, {username: username});
-    done(null, user);
-  });
+passport.deserializeUser(function (id, done) {
+  users.query('where', 'id', '=', id)
+    .fetch()
+    .then(function (col) {
+      done(null, col.at(0).toJSON());
+    })
+    .catch(function (err) {
+      done(err);
+    });
 });
 passport.use(new LocalStrategy(
   function (username, password, done) {
-    var user = _.find(users, {username: username, password: password});
-    if (user) {
-      done(null, user);
-    } else {
-      done(null, false, { message: "Wrong username or password" });
-    }
+    users.query(function (qb) {
+        qb.where({
+          username: username,
+          password: password
+        });
+      })
+      .fetch()
+      .then(function (col) {
+        if (col.length) {
+          done(null, col.at(0).toJSON());
+        } else {
+          done(null, false, { message: "Wrong username or password" });
+        }
+      })
+      .catch(function (err) {
+        done(err);
+      });
   }
 ));
 

@@ -3,7 +3,6 @@
 var Backbone = require('backbone');
 
 var User = Backbone.Model.extend({
-  idAttribute: 'username',
   defaults: {
     name: '',
     username: '',
