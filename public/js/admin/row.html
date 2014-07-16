@@ -2,6 +2,11 @@
 <td><%=username %></td>
 <td><input type="checkbox" <%= admin?"checked":"" %> disabled></td>
 <td>
+<%if (typeof created_at != "undefined") { %>
+<%=moment(created_at).format('DD/MM/YYYY HH:mm')%>
+<% } %>
+</td>
+<td>
 	<span class="glyphicon glyphicon-edit js-edit"></span>
 	<span class="glyphicon glyphicon-remove js-delete"></span>
 </td>
