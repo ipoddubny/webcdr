@@ -2,6 +2,8 @@ var router = require('express').Router();
 
 var users = require('./users');
 
+var bcrypt = require('bcryptjs');
+
 router.get('/users', function (req, res) {
   users.fetch().then(function () {
     res.json(users.toJSON());
@@ -21,6 +23,7 @@ router.post('/users', function (req, res) {
     });
     return;
   }
+  user.password = bcrypt.hashSync(user.password, 10);
   users.findByUsername(username).then(function (oldUser) {
     if (oldUser) {
       res.status(409).send({errors: [{
@@ -43,6 +46,7 @@ router.post('/users', function (req, res) {
 
 router.put('/users/:id', function (req, res) {
   var user = req.body;
+  user.password = bcrypt.hashSync(user.password, 10);
   var id = req.params.id;
   users.findById(id).then(function (oldUser) {
     if (oldUser) {

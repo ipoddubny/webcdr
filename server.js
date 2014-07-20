@@ -5,6 +5,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var LeveldbStore = require('connect-leveldb')(session);
+var bcrypt = require('bcryptjs');
 
 var config = require('./config');
 
@@ -33,17 +34,26 @@ passport.use(new LocalStrategy(
   function (username, password, done) {
     users.query(function (qb) {
         qb.where({
-          username: username,
-          password: password
+          username: username
         });
       })
       .fetch()
       .then(function (col) {
         if (col.length) {
-          done(null, col.at(0).toJSON());
-        } else {
-          done(null, false, { message: "Wrong username or password" });
+          var user = col.at(0);
+          if (
+            (
+              user.get('password').match(/\$2/) &&
+              bcrypt.compareSync(password, user.get('password'))
+            ) || (
+              user.get('password') === password
+            )
+          ) {
+            done(null, user.toJSON());
+            return;
+          }
         }
+        done(null, false, { message: "Wrong username or password" });
       })
       .catch(function (err) {
         done(err);
