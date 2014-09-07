@@ -6,16 +6,25 @@ var fs = require('fs');
 var layoutTemplate = fs.readFileSync(__dirname + '/report.html', 'utf8');
 var moment = require('moment');
 
-var days = [
-  'Понедельник',
-  'Вторник',
-  'Среда',
-  'Четверг',
-  'Пятница',
-  'Суббота',
-  'Воскресенье'
-];
+var trTable = {
+  'd0': 'Понедельник',
+  'd1': 'Вторник',
+  'd2': 'Среда',
+  'd3': 'Четверг',
+  'd4': 'Пятница',
+  'd5': 'Суббота',
+  'd6': 'Воскресенье',
 
+  'calls': 'Всего',
+  'sales': 'Продажи',
+  'service': 'Сервис'
+};
+// TODO: вообще список групп и их названий нужно получать с бэкэнда, иначе
+// теряется смысл конфига, всё равно надо в коде фронтэнда отдельно менять
+
+function translate (word) {
+  return trTable[word] || word;
+}
 
 var RowView = Marionette.ItemView.extend({
   tagName: 'tr',
@@ -24,11 +33,10 @@ var RowView = Marionette.ItemView.extend({
     getCols: function () {
       var res = [];
       _.each(this, function (val, i) {
-        if (+i == i) {
-          res = res.concat(['<td>', val, '</td>']);
+        if (+i == i) { // "0", "1", etc
+          res = res.concat(['<td>', translate(val), '</td>']);
         }
       });
-      console.log(res);
       return res.join('');
     }
   }
@@ -49,20 +57,84 @@ var GridView = Marionette.CompositeView.extend({
   templateHelpers: {
     getColumns: function () {
       return _.map(this.columns, function (column) {
-        return ['<th>', column, '</th>'].join('');
+        return ['<th>', translate(column), '</th>'].join('');
       }).join('');
     }
   }
 });
 
 require('bootstrap-datepicker');
+require('bootstrap-select');
 var tmplFilter = fs.readFileSync(__dirname + '/filter.html', 'utf8');
 var FiltersView = Marionette.ItemView.extend({
   template: _.template(tmplFilter),
+  templateHelpers: {
+    modes: {
+      week: 'Неделя',
+      day: 'День'
+    },
+    getValue: function () {
+      var startDate = moment(this.from_date);
+      var endDate = moment(this.to_date);
+      var format = 'DD/MM/YYYY';
+      if (startDate.diff(endDate, 'days')) {
+        return [startDate.format(format), endDate.format(format)].join(' - ');
+      } else {
+        return startDate.format(format);
+      }
+    }
+  },
+
+  modelEvents: {
+    'change': 'render'
+  },
+
   events: {
-    'change .datepicker': 'onChange',
+    'change .selectpicker': 'onModeChange',
+    'change .datepicker': 'onDateChange',
     'hide .datepicker': 'onDateSelected'
   },
+
+  onModeChange: function () {
+    var mode = this.$('.selectpicker').val();
+    var fromDate = moment(this.from_date);
+    var toDate = moment(this.to_date);
+
+    if (mode == 'week') {
+      this.model.set({
+        mode: mode,
+        from_date: fromDate.startOf('week').toISOString(),
+        to_date: toDate.endOf('week').toISOString()
+      });
+    } else {
+      this.model.set({
+        mode: mode,
+        from_date: fromDate.startOf('day').toISOString(),
+        to_date: fromDate.endOf('day').toISOString()
+      });
+    }
+  },
+
+  onDateChange: function () {
+    var date = this.$('.datepicker').data('datepicker').dates[0];
+    if (date) {
+      this.setInputDate(date);
+    }
+  },
+
+  setInputDate: function (date) {
+    var mode = this.model.get('mode');
+
+    // dirty hack, using mode for startOf and endOf week/day
+    var startDate = this.startDate = moment(date).startOf(mode);
+    var endDate = this.endDate = moment(date).endOf(mode);
+
+    if (mode == 'week') {
+      var format = 'DD/MM/YYYY';
+      this.$('.datepicker').val([startDate.format(format), endDate.format(format)].join(' - '));
+    }
+  },
+
   onDateSelected: function () {
     if (this.startDate && this.endDate) {
       var dates = _.map([this.startDate, this.endDate], function (str) {
@@ -74,22 +146,13 @@ var FiltersView = Marionette.ItemView.extend({
       });
     }
   },
-  setInputDate: function (date) {
-    var startDate = this.startDate = moment(date).startOf('week');
-    var endDate = this.endDate = moment(date).endOf('week');
-    var format = 'DD/MM/YYYY';
-    this.$('.datepicker').val([startDate.format(format), endDate.format(format)].join(' - '));
-  },
-  onChange: function () {
-    var date = this.$('.datepicker').data('datepicker').dates[0];
-    if (date) {
-      this.setInputDate(date);
-    }
-  },
+
   onRender: function () {
+    this.$('.selectpicker').selectpicker();
     this.$('.datepicker').datepicker({
       language: 'ru',
-      selectWeek: true
+      format: 'dd/mm/yyyy',
+      selectWeek: (this.model.get('mode') == 'week')
     });
   }
 });
@@ -101,12 +164,9 @@ var ReportView = Marionette.LayoutView.extend({
     filters: '.filters',
     grid: '.grid'
   },
-  initialize: function (options) {
-    this.filter = options.filter;
-  },
   onShow: function () {
     this.filters.show(new FiltersView({
-      model: this.filter
+      model: this.collection.filter
     }));
     this.grid.show(new GridView({
       collection: this.collection
