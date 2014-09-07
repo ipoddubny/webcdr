@@ -7,6 +7,10 @@ var config = {
       password: '123321',
       database: 'asteriskcdrdb',
       charset: 'utf8'
+    },
+    pool: {
+      min: 1,
+      max: 1
     }
   },
   sessionKey: '123hjhfds7&&&kjfh&&&788',

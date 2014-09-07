@@ -16,30 +16,43 @@ var days = [
   'Воскресенье'
 ];
 
-var groups = require('../../../groups'); // that's really crazy!
-var columns = _.reduce(groups, function (memo, group) {
-  return memo + ['<td><%=', group.name, '%></td>'].join('');
-}, '');
 
 var RowView = Marionette.ItemView.extend({
   tagName: 'tr',
-  template: _.template('<td> <%=getDay(day)%> </td><td> <%=calls%></td>' + columns),
+  template: _.template('<%=getCols()%>'),
   templateHelpers: {
-    getDay: function (day) {
-      return days[day];
+    getCols: function () {
+      var res = [];
+      _.each(this, function (val, i) {
+        if (+i == i) {
+          res = res.concat(['<td>', val, '</td>']);
+        }
+      });
+      console.log(res);
+      return res.join('');
     }
   }
 });
 
 
-var columnNames = _.reduce(groups, function (memo, group) {
-  return memo + ['<th>', group.humanName, '</th>'].join('');
-}, '');
-
 var GridView = Marionette.CompositeView.extend({
-  template: _.template('<table class="table"><thead><tr><th class="col-xs-2">День недели</th><th>Всего звонков</th>' + columnNames + '</tr></thead><tbody></tbody></table>'),
+  template: _.template('<table class="table"><thead><tr><th class="col-xs-2">Период</th><%=getColumns()%></tr></thead><tbody></tbody></table>'),
   childViewContainer: 'tbody',
-  childView: RowView
+  childView: RowView,
+  serializeData: function () {
+    return {
+      columns: this.collection.columns,
+      rows: this.collection.rows,
+      data: this.collection.data
+    };
+  },
+  templateHelpers: {
+    getColumns: function () {
+      return _.map(this.columns, function (column) {
+        return ['<th>', column, '</th>'].join('');
+      }).join('');
+    }
+  }
 });
 
 require('bootstrap-datepicker');
