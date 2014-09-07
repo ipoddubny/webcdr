@@ -85,55 +85,23 @@ function prepareSummaryQuerySelect (knex) {
 
 /*****************************************/
 
-var time_periods = [{
-  start: '8:30',
-  end: '10:00'
-}, {
-  start: '10:00',
-  end: '12:00'
-}, {
-  start: '12:00',
-  end: '15:00'
-}, {
-  start: '15:00',
-  end: '18:00'
-}, {
-  start: '18:00',
-  end: '21:00'
-}];
-
-
 function reportDay(from, to, cb) {
   var args = _.map(groups, function (group) {
-    return knex.raw('SUM(dst BETWEEN ' + group.from + ' AND ' + group.to + ') as ' + group.name);
+    return knex.raw('IFNULL(SUM(dst BETWEEN ' + group.from + ' AND ' + group.to + '),0) as ' + group.name);
   });
   knex()
     .select([
       'time_id',
-      knex.raw('concat(start,"-",end) as timerange'),
+      knex.raw('concat(time_format(start,"%H:%i"),"-",time_format(end,"%H:%i")) as timerange'),
       knex.raw('count (id) as calls')
     ].concat(args))
-    .from(knex.raw('report_timeperiods tp left join `'+db.CDR_TABLE+'` on time(calldate) between start and end'))
-    .where('direction', '=', 'in')
-    .andWhere(function () {
-      this.whereBetween(knex.raw('date(calldate)'), [from, to]);
-    })
-    .groupBy(knex.raw('time_id, timerange'))
+    .from(knex.raw('report_timeperiods tp left join `'+db.CDR_TABLE+'` on time(calldate) between start and end and direction="in" and date(calldate) between ? and ?', [from, to]))
+    .groupBy(knex.raw('time_id'))
   .then(function (res) {
-
-    console.log('hello', res);
-
-    var rows = _.map(time_periods, function (tp) {
-      return tp.start + '-' + tp.end;
-    });
-    var data = _.times(rows.length, function () {
-      return _.times(columns.length, function () {
-        return 0;
-      });
-    });
-    _.each(res, function (row) {
-      _.each(columns, function (column, j) {
-        data[row.time_id-1][j] = row[column] || 0;
+    var rows = _.pluck(res, 'timerange');
+    var data = _.map(res, function (row) {
+      return _.map(columns, function (column) {
+        return row[column];
       });
     });
     cb({
