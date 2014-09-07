@@ -45,6 +45,11 @@ router.get('/cdrs', function (req, res) {
         }).orWhere(function () {
           this.whereIn('dst', req.user.acl);
         });
+        if (req.user.acl_in) {
+          this.orWhere(function () {
+            this.where('direction', 'in');
+          });
+        }
       } else {
         this.whereRaw('1=1');
       }

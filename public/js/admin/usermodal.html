@@ -26,12 +26,18 @@
             <input type="password" class="form-control" name="password" value="<%=password%>">
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">ACL</label>
-          <div class="col-sm-10">
-            <input type="acl" class="form-control" name="acl" placeholder="123,456,789" value="<%=getTextACL()%>">
-          </div>
-        </div>
+	<div class="well">
+		<div class="form-group">
+		  <label class="col-sm-12">Ограничить доступ звонками абонентов</label>
+		  <div class="col-sm-12">
+		    <input type="text" class="form-control" name="acl" placeholder="123,456,789" value="<%=getTextACL()%>">
+		  </div>
+		</div>
+		<div class="form-group">
+		  <label class="col-sm-6">Не фильтровать входящие звонки</label>
+		    <input type="checkbox"  name="acl_in" <%= (acl_in ? " checked" : "") %>>
+		</div>
+	</div>
       </div>
 		</div>
 		<div class="modal-footer">

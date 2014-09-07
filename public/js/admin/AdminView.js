@@ -43,6 +43,7 @@ var UserModalView = Marionette.ItemView.extend({
     'username': 'input[name="username"]',
     'password': 'input[name="password"]',
     'acl': 'input[name="acl"]',
+    'acl_in': 'input[name="acl_in"]',
     'admin': 'input[name="admin"]'
   },
   events: {
@@ -85,6 +86,9 @@ var UserModalView = Marionette.ItemView.extend({
       acl: function (val) {
         return val.length === 0 || val.match(/^\d+(,\d*)*$/);
       },
+      acl_in: function (val) {
+        return true;
+      },
       admin: function (val) {
         return true;
       }
@@ -101,6 +105,8 @@ var UserModalView = Marionette.ItemView.extend({
         this.ui[f].closest('.form-group').removeClass('has-error');
       }
     }, this);
+    // TODO костыль из-за checkbox'а
+    user.acl_in = this.ui['acl_in'].prop('checked');
     if (valid) {
       if (!user.id) {
         delete user.id;

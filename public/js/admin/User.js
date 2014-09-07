@@ -7,7 +7,8 @@ var User = Backbone.Model.extend({
     name: '',
     username: '',
     password: '',
-    admin: false
+    admin: false,
+    acl_in: false
   },
   urlRoot: '/admin/users/'
 });
