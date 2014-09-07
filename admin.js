@@ -6,7 +6,9 @@ var bcrypt = require('bcryptjs');
 
 router.get('/users', function (req, res) {
   users.fetch().then(function () {
-    res.json(users.toJSON());
+    res.json(users.map(function (user) {
+      return user.omit('password');
+    }));
   });
 });
 
@@ -34,7 +36,7 @@ router.post('/users', function (req, res) {
     } else {
       users.create(user)
         .then(function(model) {
-          res.send(model.toJSON());
+          res.send(model.omit('password'));
         })
         .catch(function(err) {
           console.log(err);
@@ -46,13 +48,17 @@ router.post('/users', function (req, res) {
 
 router.put('/users/:id', function (req, res) {
   var user = req.body;
-  user.password = bcrypt.hashSync(user.password, 10);
+  if (user.password) {
+    user.password = bcrypt.hashSync(user.password, 10);
+  } else {
+    delete user.password;
+  }
   var id = req.params.id;
   users.findById(id).then(function (oldUser) {
     if (oldUser) {
       oldUser.save(user)
         .then(function(model) {
-          res.send(model.toJSON());
+          res.send(model.omit('password'));
         })
         .catch(function(err) {
           res.status(500).send('failed changing user');
@@ -60,7 +66,7 @@ router.put('/users/:id', function (req, res) {
     } else {
       users.create(user)
         .then(function(model) {
-          res.send(model.toJSON());
+          res.send(model.omit('password'));
         })
         .catch(function(err) {
           res.status(500).send('failed to create a user');

@@ -65,7 +65,7 @@ var UserModalView = Marionette.ItemView.extend({
     this.title = opts.title;
   },
   onSave: function () {
-    var fields = {
+    var fieldValidators = {
       id: function (val) {
         return (!val) || (val == parseInt(val, 10));
       },
@@ -75,7 +75,11 @@ var UserModalView = Marionette.ItemView.extend({
       username: function (val) {
         return val.length;
       },
-      password: function (val) {
+      password: function (val, validatedFields) {
+        if (validatedFields.id) {
+          // for existing user password may be blank
+          return true;
+        }
         return val.length > 5;
       },
       acl: function (val) {
@@ -87,9 +91,9 @@ var UserModalView = Marionette.ItemView.extend({
     };
     var valid = true;
     var user = {};
-    _.each(_.keys(fields), function (f) {
+    _.each(_.keys(fieldValidators), function (f) {
       var value = this.ui[f].val();
-      if (!fields[f](value)) {
+      if (!fieldValidators[f](value, user)) {
         valid = false;
         this.ui[f].closest('.form-group').addClass('has-error');
       } else {

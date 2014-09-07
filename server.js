@@ -99,7 +99,7 @@ app.get('/', function (req, res) {
 
 app.get('/profile', ensureAuthenticated);
 app.get('/profile', function (req, res) {
-  res.send(req.user);
+  res.send(_.omit(req.user, 'password'));
 });
 
 app.use('/admin', ensureAdmin);
