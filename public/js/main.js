@@ -39,7 +39,7 @@ app.addInitializer(function () {
     target: 'cdr',
     active: true
   }, {
-    name: 'Входящие',
+    name: 'Отчёты',
     target: 'report'
   }]);
 
