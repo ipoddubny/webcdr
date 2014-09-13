@@ -19,6 +19,16 @@ app.addInitializer(function () {
     parse: function (attrs) {
       this.columns = attrs.columns;
       this.rows = attrs.rows;
+
+      // подсчитать итог за весь период
+      var totals = _.reduce(attrs.data, function (resrow, row) {
+        return _.map(resrow, function (x, i) {
+          return x + row[i];
+        });
+      });
+      attrs.data.push(totals);
+
+      this.rows.push('total');
       _.each(attrs.data, function (row, i) {
         row.unshift(attrs.rows[i]);
       });
