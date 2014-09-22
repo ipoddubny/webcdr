@@ -1,4 +1,5 @@
 var config = {
+  // параметры подключения к БД
   db: {
     client: 'mysql',
     connection: {
@@ -13,8 +14,13 @@ var config = {
       max: 1
     }
   },
+
+  // параметры хранения сессий
   sessionKey: '123hjhfds7&&&kjfh&&&788',
-  sessionDatabase: '/tmp/webcdr_sessions.db'
+  sessionDatabase: '/tmp/webcdr_sessions.db',
+
+  // часовой пояс дат в базе данных (cdr и другие таблицы)
+  tz: '+0400'
 };
 
 module.exports = config;

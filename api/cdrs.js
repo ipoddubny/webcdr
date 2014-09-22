@@ -4,6 +4,7 @@ var ExcelExport = require('excel-export');
 var Bookshelf = require('bookshelf').db;
 
 var db = require('./db');
+var config = require('../config');
 
 var router = require('express').Router();
 
@@ -28,10 +29,18 @@ router.get('/cdrs', function (req, res) {
         this.whereRaw('1=1');
       }
     }).andWhere(function () {
-      this.whereBetween('calldate', [
-        req.query.start || moment().startOf('day').toJSON(),
-        req.query.end || moment().endOf('day').toJSON()
-      ]);
+      var tz = config.tz;
+      var df = 'YYYY-MM-DD HH:mm:ss'; // mysql format
+
+      var start = req.query.start
+        ? moment(req.query.start).zone(tz)
+        : moment().zone(tz).startOf('day');
+
+      var end = req.query.end
+        ? moment(req.query.end).zone(tz)
+        : moment().zone(tz).endOf('day');
+
+      this.whereBetween('calldate', [start.format(df), end.format(df)]);
     }).andWhere(function () {
       if (req.query.direction) {
         this.whereIn('direction',  req.query.direction);
