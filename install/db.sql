@@ -29,3 +29,17 @@ CREATE TABLE `cdr` (
    INDEX `clid` (`clid`)
 )
 ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS `calls`;
+CREATE TABLE `calls` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `calldate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `src` varchar(80) NOT NULL DEFAULT '',
+  `dst` varchar(80) NOT NULL DEFAULT '',
+  `uniqueid` varchar(32) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `calldate` (`calldate`),
+  KEY `dst` (`dst`),
+  KEY `src` (`src`)
+)
+ENGINE=InnoDB;

@@ -26,6 +26,8 @@ var db = require('./api/db');
   }
 */
 
+var reportTable = 'calls';
+
 var columns = _.map(groups, function (group) {
   return group.name;
 });
@@ -34,11 +36,10 @@ columns = ['calls'].concat(columns);
 function reportWeek (from, to, cb) {
   var querySelect = prepareSummaryQuerySelect(knex);
 
-  var knexTable = knex(db.CDR_TABLE);
+  var knexTable = knex(reportTable);
 
   knexTable.select.apply(knexTable, querySelect)
-    .where('direction', '=', 'in')
-    .andWhere(function () {
+    .where(function () {
       this.whereBetween(knex.raw('date(calldate)'), [from, to]);
     })
     .groupBy('day')
@@ -95,7 +96,7 @@ function reportDay(from, to, cb) {
       knex.raw('concat(time_format(start,"%H:%i"),"-",time_format(end,"%H:%i")) as timerange'),
       knex.raw('count (id) as calls')
     ].concat(args))
-    .from(knex.raw('report_timeperiods tp left join `'+db.CDR_TABLE+'` on time(calldate) between start and end and direction="in" and date(calldate) between ? and ?', [from, to]))
+    .from(knex.raw('report_timeperiods tp left join `' + reportTable + '` on time(calldate) between start and end and date(calldate) between ? and ?', [from, to]))
     .groupBy(knex.raw('time_id'))
   .then(function (res) {
     var rows = _.pluck(res, 'timerange');
