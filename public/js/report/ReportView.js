@@ -1,5 +1,6 @@
 'use strict';
 
+var $ = require('jquery');
 var _ = require('underscore');
 var Marionette = require('marionette');
 var fs = require('fs');
@@ -158,15 +159,33 @@ var FiltersView = Marionette.ItemView.extend({
   }
 });
 
+var tmplExport = '<div class="pull-right"><a href="#">Скачать (xlsx)</a></div>';
+var ExportView = Marionette.ItemView.extend({
+  template: _.template(tmplExport),
+  events: {
+    'click a': 'onClick'
+  },
+  onClick: function (e) {
+    e.preventDefault();
+    var params = this.model.toJSON();
+    params.export = 'xlsx';
+    window.location.assign('/api/summary?' + $.param(params));
+  }
+});
+
 var ReportView = Marionette.LayoutView.extend({
   template: _.template(layoutTemplate),
   className: 'container',
   regions: {
     filters: '.filters',
+    export: '.export',
     grid: '.grid'
   },
   onShow: function () {
     this.filters.show(new FiltersView({
+      model: this.collection.filter
+    }));
+    this.export.show(new ExportView({
       model: this.collection.filter
     }));
     this.grid.show(new GridView({
