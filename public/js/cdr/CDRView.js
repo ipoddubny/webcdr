@@ -87,8 +87,9 @@ var columns = [{
   cell: 'audio'
 }];
 
-var ExportLinkView = Marionette.ItemView.extend({
-  template: _.template('<a href="#">Скачать в формате xlsx</a>'),
+var exportsTemplate = 'Скачать: <a data-target="records" href="#">все записи (zip)</a>&nbsp;<a data-target="xlsx" href="#">таблицу (xlsx)</a>';
+var ExportLinksView = Marionette.ItemView.extend({
+  template: _.template(exportsTemplate),
   className: 'pull-right',
   events: {
     'click a': 'onClick'
@@ -98,7 +99,7 @@ var ExportLinkView = Marionette.ItemView.extend({
     e.preventDefault();
 
     var params = _.pick(self.collection.queryParams, ['start', 'end', 'status', 'number']);
-    params.export = 'xlsx';
+    params.export = $(e.target).data('target');  // xlsx | records
     window.location.assign('/api/cdrs?' + $.param(params));
   }
 });
@@ -131,7 +132,7 @@ var CDRView = Marionette.LayoutView.extend({
     });
 
     this.filters.show(filterView);
-    this.exportLink.show(new ExportLinkView({
+    this.exportLink.show(new ExportLinksView({
       collection: this.collection
     }));
     this.grid.show(gridView);

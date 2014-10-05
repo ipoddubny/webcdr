@@ -1,7 +1,13 @@
+var _ = require('lodash');
 var moment = require('moment');
 var Promise = require('bluebird');
 var ExcelExport = require('excel-export');
+var packer = require('zip-stream');
 var Bookshelf = require('bookshelf').db;
+
+var path = require('path');
+var fs = require('fs');
+var glob = require('glob');
 
 var db = require('./db');
 var config = require('../config');
@@ -87,12 +93,79 @@ router.get('/cdrs', function (req, res) {
       res.setHeader("Content-Disposition", "attachment; filename=" + "Report.xlsx");
       res.end(result, 'binary');
       return;
-    };
+    }
+    if (req.query.export === 'records') {
+      res.setHeader('Content-Type', 'application/zip');
+      res.setHeader("Content-Disposition", "attachment; filename=" + "records.zip");
+      serveRecordsArchive(res, collection);
+      return;
+    }
     var cnt = count[0]['count(*)'];
     result = [{total_entries: cnt}, collection.toJSON()];
     res.json(result);
   });
 });
+
+function getFile (cdr) {
+  return new Promise(function (resolve, reject) {
+    var date = moment(cdr.get('calldate'));
+    var filepath = path.join(__dirname + '/../recordings', ''+date.year(), ''+date.format('MM'), ''+date.format('DD'), '*' + cdr.get('uniqueid') + '.mp3');
+    glob(filepath, function (err, files) {
+      if (_.isArray(files) && files.length) {
+        resolve(files[0]);
+      } else {
+        reject(filepath + ' not found');
+      }
+    });
+  });
+}
+
+function serveRecordsArchive (res, collection) {
+  var archive = new packer({
+    store: true // do not try to compress, it's mp3s anyway
+  });
+
+  var records = []; // some cdrs use the same record file
+  var queue = collection.filter(function (model) {
+    var record = model.get('record');
+    if (!record) {
+      return false;
+    }
+    if (records.indexOf(record) !== -1) {
+      return false;
+    }
+    records.push(record);
+    return true;
+  });
+
+  var packFile = function (filename) {
+    return new Promise(function (resolve, reject) {
+      var fileStream = fs.createReadStream(filename);
+      archive.entry(fileStream, {name: path.basename(filename)}, function (err) {
+        if (err) {
+          reject(err);
+        }
+        resolve();
+      });
+    });
+  };
+
+  var chain = _.reduce(queue, function (chain, cdr) {
+    return chain.then(function () {
+      return getFile(cdr)
+        .then(packFile)
+        .catch(function (e) {
+          console.log(e, ", but we don't care");
+        });
+    });
+  }, new Promise.resolve());
+
+  chain.finally(function () {
+    archive.finish();
+  });
+
+  archive.pipe(res);
+}
 
 function prepareXlsx (collection) {
   var conf = {};
