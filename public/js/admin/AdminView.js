@@ -44,6 +44,7 @@ var UserModalView = Marionette.ItemView.extend({
     'password': 'input[name="password"]',
     'acl': 'input[name="acl"]',
     'acl_in': 'input[name="acl_in"]',
+    'auth_ad': 'input[name="auth_ad"]',
     'admin': 'input[name="admin"]'
   },
   events: {
@@ -76,9 +77,16 @@ var UserModalView = Marionette.ItemView.extend({
       username: function (val) {
         return val.length;
       },
+      auth_ad: function (val) {
+        return true;
+      },
       password: function (val, validatedFields) {
-        if (validatedFields.id) {
+        if (validatedFields.id && val.length == 0) {
           // for existing user password may be blank
+          return true;
+        }
+        if (validatedFields.auth_ad) {
+          // no password needed for ad auth
           return true;
         }
         return val.length > 5;
@@ -96,7 +104,13 @@ var UserModalView = Marionette.ItemView.extend({
     var valid = true;
     var user = {};
     _.each(_.keys(fieldValidators), function (f) {
-      var value = this.ui[f].val();
+      var el = this.ui[f];
+      var value;
+      if (el.attr('type') == 'checkbox') {
+        value = el.prop('checked');
+      } else {
+        value = el.val();
+      }
       if (!fieldValidators[f](value, user)) {
         valid = false;
         this.ui[f].closest('.form-group').addClass('has-error');
@@ -105,8 +119,7 @@ var UserModalView = Marionette.ItemView.extend({
         this.ui[f].closest('.form-group').removeClass('has-error');
       }
     }, this);
-    // TODO костыль из-за checkbox'а
-    user.acl_in = this.ui['acl_in'].prop('checked');
+
     if (valid) {
       if (!user.id) {
         delete user.id;
