@@ -8,6 +8,7 @@ CREATE TABLE `webuser` (
    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
    `admin` INT(1) NOT NULL DEFAULT 0,
    `acl_in` INT(1) NOT NULL DEFAULT 0,
+   `auth_ad` INT(1) NOT NULL DEFAULT 0,
    PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB;

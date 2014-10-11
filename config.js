@@ -1,26 +1,7 @@
-var config = {
-  // параметры подключения к БД
-  db: {
-    client: 'mysql',
-    connection: {
-      host: 'localhost',
-      user: 'root',
-      password: '123321',
-      database: 'asteriskcdrdb',
-      charset: 'utf8'
-    },
-    pool: {
-      min: 1,
-      max: 1
-    }
-  },
+// deprecated
+var fs = require('fs');
+var ini = require('ini');
 
-  // параметры хранения сессий
-  sessionKey: '123hjhfds7&&&kjfh&&&788',
-  sessionDatabase: '/tmp/webcdr_sessions.db',
-
-  // часовой пояс дат в базе данных (cdr и другие таблицы)
-  tz: '+0400'
-};
+config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'));
 
 module.exports = config;

@@ -5,7 +5,6 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var LeveldbStore = require('connect-leveldb')(session);
-var bcrypt = require('bcryptjs');
 
 var config = require('./config');
 
@@ -16,7 +15,6 @@ var _ = require('lodash');
 var users = require('./users');
 
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
 passport.serializeUser(function (user, done) {
   done(null, user.id);
 });
@@ -30,36 +28,7 @@ passport.deserializeUser(function (id, done) {
       done(err);
     });
 });
-passport.use(new LocalStrategy(
-  function (username, password, done) {
-    users.query(function (qb) {
-        qb.where({
-          username: username
-        });
-      })
-      .fetch()
-      .then(function (col) {
-        if (col.length) {
-          var user = col.at(0);
-          if (
-            (
-              user.get('password').match(/\$2/) &&
-              bcrypt.compareSync(password, user.get('password'))
-            ) || (
-              user.get('password') === password
-            )
-          ) {
-            done(null, user.toJSON());
-            return;
-          }
-        }
-        done(null, false, { message: "Wrong username or password" });
-      })
-      .catch(function (err) {
-        done(err);
-      });
-  }
-));
+passport.use(require('./auth'));
 
 var app = express();
 app.use(morgan('dev'));
@@ -68,9 +37,9 @@ app.use(bodyParser());
 app.use(cookieParser());
 app.use(session({
   store: new LeveldbStore({
-    dbLocation: config.sessionDatabase
+    dbLocation: config.session.database
   }),
-  secret: config.sessionKey
+  secret: config.session.key
 }));
 app.use(passport.initialize());
 app.use(passport.session());
