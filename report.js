@@ -33,6 +33,17 @@ var columns = _.map(groups, function (group) {
 });
 columns = ['calls'].concat(columns);
 
+
+function getTotals (table) {
+  return _.reduce(table, function (resrow, row) {
+    return _.map(resrow, function (x, i) {
+      return x + row[i];
+    });
+  });
+}
+
+/******************************************************/
+
 function reportWeek (from, to, cb) {
   var querySelect = prepareSummaryQuerySelect(knex);
 
@@ -44,10 +55,15 @@ function reportWeek (from, to, cb) {
     })
     .groupBy('day')
     .then(function (data) {
-
-      var rows = _.times(7, function (i) {
-        return 'd'+i;
-      });
+      var rows = [
+        'Понедельник',
+        'Вторник',
+        'Среда',
+        'Четверг',
+        'Пятница',
+        'Суббота',
+        'Воскресенье'
+      ];
 
       var result = _.times(rows.length, function () {
         return _.times(columns.length, function () {
@@ -60,6 +76,9 @@ function reportWeek (from, to, cb) {
           result[row.day][index] = row[column];
         });
       });
+
+      rows.push('Всего');
+      result.push(getTotals(result));
 
       var retd = {
         rows: rows,
@@ -105,6 +124,10 @@ function reportDay(from, to, cb) {
         return row[column];
       });
     });
+
+    rows.push('Всего');
+    data.push(getTotals(data));
+
     cb({
       columns: columns,
       rows: rows,

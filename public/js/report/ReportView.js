@@ -8,15 +8,6 @@ var layoutTemplate = fs.readFileSync(__dirname + '/report.html', 'utf8');
 var moment = require('moment');
 
 var trTable = {
-  'd0': 'Понедельник',
-  'd1': 'Вторник',
-  'd2': 'Среда',
-  'd3': 'Четверг',
-  'd4': 'Пятница',
-  'd5': 'Суббота',
-  'd6': 'Воскресенье',
-
-  'total': 'Всего',
   'calls': 'Всего',
   'sales': 'Продажи',
   'service': 'Сервис'
