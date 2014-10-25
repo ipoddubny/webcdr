@@ -16,7 +16,9 @@ var FilterView = require('./FilterView');
 var status2text = {
   'NO ANSWER': 'Не отвечен',
   BUSY: 'Занято',
-  ANSWERED: 'Отвечен'
+  ANSWERED: 'Отвечен',
+  FAILED: 'Ошибка',
+  CONGESTION: 'Перегрузка'
 };
 
 var StatusFormatter = _.extend({}, Backgrid.CellFormatter.prototype, {
