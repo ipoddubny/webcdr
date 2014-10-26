@@ -89,7 +89,7 @@ var columns = [{
   cell: 'audio'
 }];
 
-var exportsTemplate = 'Скачать: <a data-target="records" href="#">все записи (zip)</a>&nbsp;<a data-target="xlsx" href="#">таблицу (xlsx)</a>';
+var exportsTemplate = 'Скачать:&nbsp; <a data-target="records" href="#"><i class="fa fa-file-audio-o"></i>&nbsp;записи звонков</a>&nbsp;&nbsp;<a data-target="xlsx" href="#"><i class="fa fa-file-excel-o"></i>&nbsp;таблицу</a>';
 var ExportLinksView = Marionette.ItemView.extend({
   template: _.template(exportsTemplate),
   className: 'pull-right',

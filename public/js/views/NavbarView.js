@@ -7,7 +7,7 @@ var fs = require('fs');
 var tmpl = fs.readFileSync(__dirname + '/../templates/navbar.tmpl', 'utf8');
 
 var ItemView = Marionette.ItemView.extend({
-  template: _.template('<a href="#"><%= name %></a>'),
+  template: _.template('<a href="#"><i class="fa <%= icon %>"></i>&nbsp;<%= name %></a>'),
   tagName: 'li',
   events: {
     'click a': 'onClick'

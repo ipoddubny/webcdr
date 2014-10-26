@@ -36,10 +36,12 @@ app.addInitializer(function () {
 
   app.navcol = new Backbone.Collection([{
     name: 'Звонки',
+    icon: 'fa-bars',
     target: 'cdr',
     active: true
   }, {
     name: 'Отчёты',
+    icon: 'fa-bar-chart',
     target: 'report'
   }]);
 
@@ -57,6 +59,7 @@ app.addInitializer(function () {
     if (app.profile.get('admin')) {
       app.navcol.push({
         name: 'Администрирование',
+        icon: 'fa-users',
         target: 'admin'
       });
     }

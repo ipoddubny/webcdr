@@ -150,7 +150,7 @@ var FiltersView = Marionette.ItemView.extend({
   }
 });
 
-var tmplExport = '<div class="pull-right"><a href="#">Скачать (xlsx)</a></div>';
+var tmplExport = '<div class="pull-right">Скачать: <a href="#"><i class="fa fa-file-excel-o"></i>&nbsp;таблицу</a></div>';
 var ExportView = Marionette.ItemView.extend({
   template: _.template(tmplExport),
   events: {

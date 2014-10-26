@@ -4,6 +4,7 @@ body {
 
 #export {
 	overflow: auto;
+	margin-bottom: 5px;
 }
 
 .audiojs {
