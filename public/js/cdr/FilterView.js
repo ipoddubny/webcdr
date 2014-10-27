@@ -16,8 +16,8 @@ var dateLocale = {
   toLabel: 'По',
   weekLabel: 'W',
   customRangeLabel: 'Выбрать вручную',
-  daysOfWeek: moment()._lang._weekdaysMin.slice(),
-  monthNames: moment()._lang._monthsShort.slice(),
+  daysOfWeek: moment()._locale._weekdaysMin.slice(),
+  monthNames: moment()._locale._monthsShort.slice(),
   firstDay: 1
 };
 
@@ -84,11 +84,11 @@ var FilterView = Marionette.ItemView.extend({
       format: 'DD/MM/YYYY HH:mm',
       ranges: {
         'Сегодня': [moment().startOf('day'), moment().endOf('day')],
-        'Вчера': [moment(0, 'HH').subtract('days', 1), moment().subtract('days', 1).endOf('day')],
-        'Последние 7 дней': [moment(0, 'HH').subtract('days', 6), moment().endOf('day')],
-        'Последние 30 дней': [moment(0, 'HH').subtract('days', 29), moment().endOf('day')],
+        'Вчера': [moment(0, 'HH').subtract(1, 'days'), moment().subtract(1, 'days').endOf('day')],
+        'Последние 7 дней': [moment(0, 'HH').subtract(6, 'days'), moment().endOf('day')],
+        'Последние 30 дней': [moment(0, 'HH').subtract(29, 'days'), moment().endOf('day')],
         'Текущий месяц': [moment().startOf('month'), moment().endOf('month')],
-        'Прошлый месяц': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+        'Прошлый месяц': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
       },
       buttonClasses: ['btn', 'btn-sm'],
       startDate: moment().startOf('day'),

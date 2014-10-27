@@ -19,7 +19,7 @@
     "knex": "~0.6.22",
     "bookshelf": "~0.7.6",
     "bluebird": "~2.1.1",
-    "moment": "~2.7.0",
+    "moment": "~2.8.0",
     "lodash": "~2.4.1",
     "excel-export": "~0.3.11",
     "passport": "~0.2.0",
@@ -51,7 +51,7 @@
   "browser": {
     "spin.js": "./public/bower_components/spin.js/spin.js",
     "audiojs": "./public/bower_components/audiojs/audiojs/audio.js",
-    "moment": "./public/bower_components/moment/min/moment-with-langs.min.js",
+    "moment": "./public/bower_components/moment/min/moment-with-locales.min.js",
     "bootstrap-daterangepicker": "./public/bower_components/bootstrap-daterangepicker/daterangepicker.js",
     "bootstrap-datepicker": "./public/js/vendor/bootstrap-datepicker.js",
     "bootstrap-select": "./public/bower_components/bootstrap-select/bootstrap-select.js",

@@ -24,7 +24,7 @@ var audiojs = require('audiojs');
   }
 }());
 
-moment.lang('ru');
+moment.locale('ru');
 
 audiojs.events.ready(function() {
   var as = audiojs.createAll();
