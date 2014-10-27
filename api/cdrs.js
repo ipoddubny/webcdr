@@ -71,7 +71,7 @@ router.get('/cdrs', function (req, res) {
     });
   };
 
-  var countPromise = Bookshelf.knex(db.CDR_TABLE).count('*');
+  var countPromise = Bookshelf.knex(config.cdr.table).count('*');
   filter.call(countPromise);
 
   var dataPromise = db.models.CDR.collection()

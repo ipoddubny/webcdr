@@ -1,11 +1,11 @@
 var Bookshelf = require('bookshelf').db;
+var config = require('../config');
 
 var CDR = Bookshelf.Model.extend({
-  tableName: 'cdrview'
+  tableName: config.cdr.table
 });
 
 module.exports = {
-  CDR_TABLE: 'cdrview',
   models: {
     CDR: CDR
   }

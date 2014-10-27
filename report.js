@@ -4,7 +4,6 @@ var Bookshelf = require('bookshelf');
 var knex = Bookshelf.db.knex;
 
 var groups = require('./groups');
-var db = require('./api/db');
 
 /*
   {
