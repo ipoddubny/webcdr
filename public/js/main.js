@@ -1,3 +1,5 @@
+'use strict';
+
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
@@ -66,20 +68,16 @@ app.on('start', function (options) {
     });
   }
 
+  var routeFunctions = {
+    cdr: 'showCDR',
+    report: 'showReport',
+    admin: 'showAdmin'
+  };
+
   var controller = {
-    'changeTab': function (tab) {
+    changeTab: function (tab) {
       app.navbar.setActive(tab);
-      switch (tab) {
-        case 'cdr':
-          app.showCDR();
-          break;
-        case 'report':
-          app.showReport();
-          break;
-        case 'admin':
-          app.showAdmin();
-          break;
-      }
+      app[routeFunctions[tab]]();
     }
   };
 
