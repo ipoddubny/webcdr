@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var express = require('express');
 var compress = require('compression');
 var cookieParser = require('cookie-parser');
@@ -6,10 +7,8 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var LeveldbStore = require('connect-leveldb')(session);
 
-var config = require('./config');
-
-var _ = require('lodash');
-var users = require('./users');
+var config = require('./lib/config');
+var users = require('./lib/users');
 
 var passport = require('passport');
 passport.serializeUser(function (user, done) {
@@ -25,10 +24,10 @@ passport.deserializeUser(function (id, done) {
       done(err);
     });
 });
-passport.use(require('./auth'));
+passport.use(require('./lib/auth'));
 
 var app = express();
-app.use(morgan('dev'));
+app.use(morgan('dev')); // logger
 app.use(compress());
 app.use(bodyParser());
 app.use(cookieParser());
@@ -56,7 +55,7 @@ app.get('/logout', function (req, res) {
 });
 
 app.use('/api', ensureAuthenticated);
-app.use('/api', require('./api'));
+app.use('/api', require('./lib/api'));
 
 app.get('/', ensureAuthenticated);
 app.get('/', function (req, res) {
@@ -69,7 +68,7 @@ app.get('/profile', function (req, res) {
 });
 
 app.use('/admin', ensureAdmin);
-app.use('/admin', require('./admin'));
+app.use('/admin', require('./lib/admin'));
 
 app.use(express.static(__dirname + '/public'));
 
