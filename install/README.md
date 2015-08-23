@@ -1,11 +1,28 @@
-1. Create a MySQL database with install/db.sql:
-``mysql database -uuser -ppassword < db.sql``
+0. Install node.js (iojs 3.0+ recommended).
+1. Install global npm packages used to build webcdr:
 
-2. Create a symlink "recordings" pointing to the asterisk records directory,
-typically it's /var/spool/asterisk/monitor.
-Files must have paths that conform to the pattern "YYYY/M/D/anyting_${UNIQUEID}.mp3",
-where ${UNIQUEID} matches uniqueid of a record in cdr table in the database.
+	npm -g install bower browserify
 
-3. Edit config.ini
+2. Install bower dependencies:
 
-4. Set up system service
+	cd PATH_TO_WEBCDR/public
+	bower install
+
+3. Build client javascript:
+
+	npm run build
+
+4. Create a MySQL database for cdr data (WARNING: the script drop tables if they exist!):
+
+	cd PATH_TO_WEBCDR/install
+	mysqladmin create asteriskcdrdb
+	mysql asteriskcdrdb -uuser -ppassword < db.sql
+
+5. Set up your Asterisk to save cdr data into the database you've created
+6. Set up your Asterisk to save call recordings to mp3 files
+7. Create the symlink PATH_TO_WEBCDR/recordings pointing to the asterisk records directory,
+   usually it's /var/spool/asterisk/monitor.
+   Files must have paths conforming to the pattern "YYYY/M/D/anyting_${UNIQUEID}.mp3",
+   where ${UNIQUEID} matches uniqueid of a record in the cdr table in the database.
+8. Edit config.ini
+9. Set up webcdr to run in background at system boot using forever, pm2, systemd or whatever you prefer.
