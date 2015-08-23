@@ -8,7 +8,8 @@ var morgan = require('morgan');
 var LeveldbStore = require('connect-leveldb')(session);
 
 var config = require('./lib/config');
-var users = require('./lib/models/users');
+var Users = require('./lib/models/users');
+var users = new Users();
 
 var passport = require('passport');
 passport.serializeUser(function (user, done) {
@@ -24,7 +25,7 @@ passport.deserializeUser(function (id, done) {
       done(err);
     });
 });
-passport.use(require('./lib/auth'));
+passport.use(require('./lib/auth')(users));
 
 var app = express();
 app.use(morgan('dev')); // logger
@@ -68,7 +69,7 @@ app.get('/profile', function (req, res) {
 });
 
 app.use('/admin', ensureAdmin);
-app.use('/admin', require('./lib/admin'));
+app.use('/admin', require('./lib/admin')(users));
 
 app.use(express.static(__dirname + '/public'));
 
