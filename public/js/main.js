@@ -58,20 +58,13 @@ app.on('start', function (options) {
   });
   app.rootView.navigation.show(app.navbar);
 
-  var Profile = Backbone.Model.extend({
-    url: '/profile'
-  });
-
-  app.profile = new Profile();
-  app.profile.fetch().then(function () {
-    if (app.profile.get('admin')) {
-      app.navcol.push({
-        name: 'Администрирование',
-        icon: 'fa-users',
-        target: 'admin'
-      });
-    }
-  });
+  if (app.profile.get('admin')) {
+    app.navcol.push({
+      name: 'Администрирование',
+      icon: 'fa-users',
+      target: 'admin'
+    });
+  }
 
   var controller = {
     'changeTab': function (tab) {
@@ -111,4 +104,11 @@ app.on('start', function (options) {
   }
 });
 
-app.start();
+
+var Profile = Backbone.Model.extend({
+  url: '/profile'
+});
+app.profile = new Profile();
+app.profile.fetch().then(function () {
+  app.start();
+});
