@@ -2,7 +2,7 @@
 
 var $ = require('jquery');
 var _ = require('underscore');
-var Marionette = require('marionette');
+var Marionette = require('backbone.marionette');
 var fs = require('fs');
 var layoutTemplate = fs.readFileSync(__dirname + '/report.html', 'utf8');
 var moment = require('moment');

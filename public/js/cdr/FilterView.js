@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
-var Marionette = require('marionette');
+var Marionette = require('backbone.marionette');
 var moment = require('moment');
 require('bootstrap-daterangepicker');
 require('bootstrap-select');

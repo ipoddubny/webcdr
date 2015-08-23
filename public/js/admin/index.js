@@ -5,7 +5,7 @@ var Backbone = require('backbone');
 var User = require('./User');
 var AdminView = require('./AdminView');
 
-app.addInitializer(function () {
+app.on('start', function () {
   var self = this;
 
   var Users = Backbone.Collection.extend({
@@ -17,7 +17,7 @@ app.addInitializer(function () {
 
   self.showAdmin = function () {
     users.fetch().then(function () {
-      self.main.show(new AdminView({
+      self.rootView.main.show(new AdminView({
         collection: users
       }));
     });

@@ -5,7 +5,7 @@ var Backbone = require('backbone');
 var moment = require('moment');
 var ReportView = require('./ReportView');
 
-app.addInitializer(function () {
+app.on('start', function () {
   var self = this;
 
   var Report = Backbone.Collection.extend({
@@ -45,7 +45,7 @@ app.addInitializer(function () {
 
   self.showReport = function () {
     report.fetch().then(function () {
-      self.main.show(new ReportView({
+      self.rootView.main.show(new ReportView({
         collection: report
       }));
     });

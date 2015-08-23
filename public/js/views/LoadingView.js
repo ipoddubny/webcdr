@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
-var Marionette = require('marionette');
+var Marionette = require('backbone.marionette');
 var Spinner = require('spin.js');
 
 var LoadingView = Marionette.ItemView.extend({

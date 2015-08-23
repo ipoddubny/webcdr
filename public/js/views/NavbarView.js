@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
-var Marionette = require('marionette');
+var Marionette = require('backbone.marionette');
 
 var fs = require('fs');
 var tmpl = fs.readFileSync(__dirname + '/../templates/navbar.tmpl', 'utf8');

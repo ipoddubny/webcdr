@@ -2,7 +2,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
 Backbone.$ = $;
-var Marionette = require('marionette');
+var Marionette = require('backbone.marionette');
 
 require('./plugins');
 
@@ -26,14 +26,19 @@ var ModalRegion = Marionette.Region.extend({
   }
 });
 
-app.addRegions({
-  navigation: '#navigation',
-  main: '#main',
-  modal: ModalRegion
+var RootView = Marionette.LayoutView.extend({
+  el: 'body',
+
+  regions: {
+    navigation: '#navigation',
+    main: '#main',
+    modal: ModalRegion
+  }
 });
 
-app.addInitializer(function () {
+app.rootView = new RootView();
 
+app.on('start', function (options) {
   app.navcol = new Backbone.Collection([{
     name: 'Звонки',
     icon: 'fa-bars',
@@ -48,7 +53,7 @@ app.addInitializer(function () {
   app.navbar = new NavbarView({
     collection: app.navcol
   });
-  app.navigation.show(app.navbar);
+  app.rootView.navigation.show(app.navbar);
 
   var Profile = Backbone.Model.extend({
     url: '/profile'
@@ -93,10 +98,7 @@ app.addInitializer(function () {
     app.router.navigate(target);
     controller.changeTab(target);
   });
-});
 
-
-app.on("start", function(options){
   if (Backbone.history) {
     Backbone.history.start();
   }

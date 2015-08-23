@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
-var Marionette = require('marionette');
+var Marionette = require('backbone.marionette');
 
 var fs = require('fs');
 
@@ -159,7 +159,7 @@ var AdminView = Marionette.LayoutView.extend({
           this.collection.create(user, {
             wait: true,
             success: function () {
-              app.modal.hide();
+              app.rootView.modal.hide();
             }
           });
         }
@@ -180,7 +180,7 @@ var AdminView = Marionette.LayoutView.extend({
       title: opts.title
     });
     this.listenTo(modalUserView, 'save', opts.onSave);
-    app.modal.show(modalUserView);
+    app.rootView.modal.show(modalUserView);
   },
   deleteUser: function (user) {
     if (confirm('Удалить пользователя ' + user.get('name') + '?')) {
@@ -197,7 +197,7 @@ var AdminView = Marionette.LayoutView.extend({
           success: function () {
             // XXX dirty
             self.collection.fetch({reset : true});
-            app.modal.hide();
+            app.rootView.modal.hide();
           }
         });
       }
