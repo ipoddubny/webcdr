@@ -1,4 +1,4 @@
-var Bookshelf = require('bookshelf').db;
+var Bookshelf = require('./db');
 
 var User = Bookshelf.Model.extend({
   tableName: 'webuser',

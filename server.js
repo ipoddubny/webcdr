@@ -8,9 +8,6 @@ var LeveldbStore = require('connect-leveldb')(session);
 
 var config = require('./config');
 
-var Bookshelf = require('bookshelf');
-Bookshelf.db = Bookshelf.initialize(config.db);
-
 var _ = require('lodash');
 var users = require('./users');
 
@@ -63,7 +60,7 @@ app.use('/api', require('./api'));
 
 app.get('/', ensureAuthenticated);
 app.get('/', function (req, res) {
-  res.sendfile(__dirname + '/public/index.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
 
 app.get('/profile', ensureAuthenticated);

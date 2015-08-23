@@ -3,7 +3,7 @@ var moment = require('moment');
 var Promise = require('bluebird');
 var ExcelExport = require('excel-export');
 var packer = require('zip-stream');
-var Bookshelf = require('bookshelf').db;
+var Bookshelf = require('../db');
 
 var path = require('path');
 var fs = require('fs');
@@ -39,12 +39,12 @@ router.get('/cdrs', function (req, res) {
       var df = 'YYYY-MM-DD HH:mm:ss'; // mysql format
 
       var start = req.query.start
-        ? moment(req.query.start).zone(tz)
-        : moment().zone(tz).startOf('day');
+        ? moment(req.query.start).utcOffset(tz)
+        : moment().utcOffset(tz).startOf('day');
 
       var end = req.query.end
-        ? moment(req.query.end).zone(tz)
-        : moment().zone(tz).endOf('day');
+        ? moment(req.query.end).utcOffset(tz)
+        : moment().utcOffset(tz).endOf('day');
 
       this.whereBetween('calldate', [start.format(df), end.format(df)]);
     }).andWhere(function () {

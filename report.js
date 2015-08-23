@@ -1,7 +1,7 @@
 var _ = require('lodash');
 
-var Bookshelf = require('bookshelf');
-var knex = Bookshelf.db.knex;
+var Bookshelf = require('./db');
+var knex = Bookshelf.knex;
 
 var groups = require('./groups');
 

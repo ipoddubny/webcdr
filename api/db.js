@@ -1,4 +1,4 @@
-var Bookshelf = require('bookshelf').db;
+var Bookshelf = require('../db');
 var config = require('../config');
 
 var CDR = Bookshelf.Model.extend({

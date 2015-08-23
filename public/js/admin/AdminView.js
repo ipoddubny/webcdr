@@ -7,6 +7,8 @@ var fs = require('fs');
 
 var User = require('./User');
 
+var moment = require('moment');
+
 var rowTemplate = fs.readFileSync(__dirname + '/row.html', 'utf8');
 var tableTemplate = fs.readFileSync(__dirname + '/table.html', 'utf8');
 var modalTemplate = fs.readFileSync(__dirname + '/usermodal.html', 'utf8');
@@ -14,6 +16,9 @@ var modalTemplate = fs.readFileSync(__dirname + '/usermodal.html', 'utf8');
 var RowView = Marionette.ItemView.extend({
   tagName: 'tr',
   template: _.template(rowTemplate),
+  serializeData: function () {
+    return _.extend({moment: moment}, this.model.toJSON());
+  },
   triggers: {
     'click .js-edit': 'edit',
     'click .js-delete': 'delete'

@@ -1,6 +1,6 @@
 var moment = require('moment');
 var _ = require('lodash');
-var Bookshelf = require('bookshelf').db;
+var Bookshelf = require('../db');
 var ExcelExport = require('excel-export');
 
 var groups = require('../groups');
