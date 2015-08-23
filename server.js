@@ -8,7 +8,7 @@ var morgan = require('morgan');
 var LeveldbStore = require('connect-leveldb')(session);
 
 var config = require('./lib/config');
-var users = require('./lib/users');
+var users = require('./lib/models/users');
 
 var passport = require('passport');
 passport.serializeUser(function (user, done) {
