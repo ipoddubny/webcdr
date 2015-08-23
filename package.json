@@ -66,12 +66,6 @@
   "browserify-shim": {
     "audiojs": "audiojs",
     "spin.js": "Spinner",
-    "bootstrap-daterangepicker": {
-      "depends": [
-        "moment",
-        "jquery:jQuery"
-      ]
-    },
     "bootstrap-select": {
       "depends": [
         "jquery:jQuery",

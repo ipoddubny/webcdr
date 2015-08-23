@@ -4,6 +4,9 @@ var Backbone = require('backbone');
 Backbone.$ = $;
 var Marionette = require('backbone.marionette');
 
+var moment = require('moment');
+require('moment/locale/ru');
+
 require('./plugins');
 
 var app = window.app = new Marionette.Application();

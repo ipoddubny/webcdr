@@ -10,14 +10,15 @@ var fs = require('fs');
 var tmplFilter = fs.readFileSync(__dirname + '/filter.html', 'utf8');
 
 var dateLocale = {
+  format: 'DD/MM/YYYY',
   applyLabel: 'Применить',
   cancelLabel: 'Отмена',
   fromLabel: 'С',
   toLabel: 'По',
   weekLabel: 'W',
   customRangeLabel: 'Выбрать вручную',
-  daysOfWeek: moment()._locale._weekdaysMin.slice(),
-  monthNames: moment()._locale._monthsShort.slice(),
+  daysOfWeek: moment.weekdaysMin(),
+  monthNames: moment.monthsShort(),
   firstDay: 1
 };
 
@@ -80,7 +81,7 @@ var FilterView = Marionette.ItemView.extend({
     this.ui.timerange.daterangepicker({
       locale: dateLocale,
       timePicker: true,
-      timePicker12Hour: false,
+      timePicker24Hour: true,
       format: 'DD/MM/YYYY HH:mm',
       ranges: {
         'Сегодня': [moment().startOf('day'), moment().endOf('day')],
