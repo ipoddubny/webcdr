@@ -3,8 +3,7 @@
 var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
-var fs = require('fs');
-var tmpl = fs.readFileSync(__dirname + '/../templates/navbar.tmpl', 'utf8');
+var tmpl = require('../templates/navbar.html');
 
 var ItemView = Marionette.ItemView.extend({
   template: _.template('<a href="#"><i class="fa <%= icon %>"></i>&nbsp;<%= name %></a>'),
@@ -25,7 +24,7 @@ var ItemView = Marionette.ItemView.extend({
 });
 
 var NavbarView = Marionette.CompositeView.extend({
-  template: _.template(tmpl),
+  template: tmpl,
   childView: ItemView,
   childViewContainer: '.js-list',
   className: 'navbar navbar-inverse navbar-fixed-top',

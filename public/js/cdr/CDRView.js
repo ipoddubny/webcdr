@@ -8,8 +8,7 @@ var audiojs = require('audiojs');
 var Backgrid = require('backgrid');
 require('backgrid-paginator');
 
-var fs = require('fs');
-var tmpl = fs.readFileSync(__dirname + '/cdr.html', 'utf8');
+var tmpl = require('./cdr.html');
 
 var FilterView = require('./FilterView');
 
@@ -107,7 +106,7 @@ var ExportLinksView = Marionette.ItemView.extend({
 });
 
 var CDRView = Marionette.LayoutView.extend({
-  template: _.template(tmpl),
+  template: tmpl,
   regions: {
     filters: '#filters',
     exportLink: '#export',

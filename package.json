@@ -36,6 +36,7 @@
     "moment": "^2.10.0",
     "morgan": "^1.6.0",
     "mysql": "^2.9.0",
+    "node-underscorify": "0.0.14",
     "passport": "^0.3.0",
     "passport-local": "~1.0.0",
     "spin.js": "^2.3.2",
@@ -49,7 +50,10 @@
   "private": true,
   "browserify": {
     "transform": [
-      "brfs",
+      ["node-underscorify", {
+        "extensions": ["html", "ejs"],
+        "requires": [{"variable": "_", "module": "underscore"}]
+      }],
       "browserify-shim"
     ]
   },

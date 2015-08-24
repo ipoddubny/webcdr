@@ -2,10 +2,10 @@
 
 var $ = require('jquery');
 var _ = require('underscore');
-var Marionette = require('backbone.marionette');
-var fs = require('fs');
-var layoutTemplate = fs.readFileSync(__dirname + '/report.html', 'utf8');
 var moment = require('moment');
+var Marionette = require('backbone.marionette');
+
+var layoutTemplate = require('./report.html');
 
 var trTable = {
   'calls': 'Всего',
@@ -58,9 +58,9 @@ var GridView = Marionette.CompositeView.extend({
 
 require('bootstrap-datepicker');
 require('bootstrap-select');
-var tmplFilter = fs.readFileSync(__dirname + '/filter.html', 'utf8');
+var tmplFilter = require('./filter.html');
 var FiltersView = Marionette.ItemView.extend({
-  template: _.template(tmplFilter),
+  template: tmplFilter,
   templateHelpers: {
     modes: {
       week: 'Неделя',
@@ -165,7 +165,7 @@ var ExportView = Marionette.ItemView.extend({
 });
 
 var ReportView = Marionette.LayoutView.extend({
-  template: _.template(layoutTemplate),
+  template: layoutTemplate,
   className: 'container',
   regions: {
     filters: '.filters',

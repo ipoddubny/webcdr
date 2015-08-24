@@ -3,19 +3,17 @@
 var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 
-var fs = require('fs');
-
 var User = require('./User');
 
 var moment = require('moment');
 
-var rowTemplate = fs.readFileSync(__dirname + '/row.html', 'utf8');
-var tableTemplate = fs.readFileSync(__dirname + '/table.html', 'utf8');
-var modalTemplate = fs.readFileSync(__dirname + '/usermodal.html', 'utf8');
+var rowTemplate = require('./row.html');
+var tableTemplate = require('./table.html');
+var modalTemplate = require('./usermodal.html');
 
 var RowView = Marionette.ItemView.extend({
   tagName: 'tr',
-  template: _.template(rowTemplate),
+  template: rowTemplate,
   serializeData: function () {
     return _.extend({moment: moment}, this.model.toJSON());
   },
@@ -28,7 +26,7 @@ var RowView = Marionette.ItemView.extend({
 var GridView = Marionette.CompositeView.extend({
   tagName: 'table',
   className: 'table',
-  template: _.template(tableTemplate),
+  template: tableTemplate,
   childView: RowView,
   childViewElement: 'tbody',
   onChildviewDelete: function (view) {
@@ -41,7 +39,7 @@ var GridView = Marionette.CompositeView.extend({
 
 var UserModalView = Marionette.ItemView.extend({
   className: 'modal fade',
-  template: _.template(modalTemplate),
+  template: modalTemplate,
   ui: {
     'id': 'input[name="id"]',
     'name': 'input[name="name"]',

@@ -6,8 +6,7 @@ var moment = require('moment');
 require('bootstrap-daterangepicker');
 require('bootstrap-select');
 
-var fs = require('fs');
-var tmplFilter = fs.readFileSync(__dirname + '/filter.html', 'utf8');
+var tmplFilter = require('./filter.html');
 
 var dateLocale = {
   format: 'DD/MM/YYYY',
@@ -23,7 +22,7 @@ var dateLocale = {
 };
 
 var FilterView = Marionette.ItemView.extend({
-  template: _.template(tmplFilter),
+  template: tmplFilter,
   ui: {
     'timerange': '#timerange',
     'status': '#status_filter',
