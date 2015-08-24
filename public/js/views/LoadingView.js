@@ -5,7 +5,7 @@ var Marionette = require('backbone.marionette');
 var Spinner = require('spin.js');
 
 var LoadingView = Marionette.ItemView.extend({
-  template: _.template(''),
+  template: false,
   className: 'container',
   onRender: function () {
     var opts = {
