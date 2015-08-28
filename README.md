@@ -1,6 +1,8 @@
 # WebCDR
 ## интерфейс промотра CDR и прослушивания записей звонков для Asterisk
 
+[![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
+
 ### Возможности
 
 - просмотр CDR, с фильтрацией по времени, номеру телефона, статусу, направлению звонка

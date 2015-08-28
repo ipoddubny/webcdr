@@ -5,7 +5,7 @@ var Backbone = require('backbone');
 var moment = require('moment');
 var ReportView = require('./ReportView');
 
-app.on('start', function () {
+window.app.on('start', function () {
   var self = this;
 
   var Report = Backbone.Collection.extend({

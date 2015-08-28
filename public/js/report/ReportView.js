@@ -26,7 +26,7 @@ var RowView = Marionette.ItemView.extend({
     getCols: function () {
       var res = [];
       _.each(this, function (val, i) {
-        if (+i == i) { // "0", "1", etc
+        if (i.match(/^\d+$/)) { // "0", "1", etc
           res = res.concat(['<td>', translate(val), '</td>']);
         }
       });
@@ -34,7 +34,6 @@ var RowView = Marionette.ItemView.extend({
     }
   }
 });
-
 
 var GridView = Marionette.CompositeView.extend({
   template: _.template('<table class="table"><thead><tr><th class="col-xs-2">Период</th><%=getColumns()%></tr></thead><tbody></tbody></table>'),
@@ -93,7 +92,7 @@ var FiltersView = Marionette.ItemView.extend({
     var fromDate = moment(this.from_date);
     var toDate = moment(this.to_date);
 
-    if (mode == 'week') {
+    if (mode === 'week') {
       this.model.set({
         mode: mode,
         from_date: fromDate.startOf('week').toISOString(),
@@ -122,7 +121,7 @@ var FiltersView = Marionette.ItemView.extend({
     var startDate = this.startDate = moment(date).startOf(mode);
     var endDate = this.endDate = moment(date).endOf(mode);
 
-    if (mode == 'week') {
+    if (mode === 'week') {
       var format = 'DD/MM/YYYY';
       this.$('.datepicker').val([startDate.format(format), endDate.format(format)].join(' - '));
     }
@@ -145,7 +144,7 @@ var FiltersView = Marionette.ItemView.extend({
     this.$('.datepicker').datepicker({
       language: 'ru',
       format: 'dd/mm/yyyy',
-      selectWeek: (this.model.get('mode') == 'week')
+      selectWeek: (this.model.get('mode') === 'week')
     });
   }
 });

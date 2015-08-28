@@ -2,7 +2,7 @@ var CDR = require('./CDR');
 var CDRView = require('./CDRView');
 var LoadingView = require('../views/LoadingView');
 
-app.on('start', function () {
+window.app.on('start', function () {
   this.showCDR = function () {
     var self = this;
     self.cdrs = new CDR();

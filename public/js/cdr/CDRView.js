@@ -35,12 +35,12 @@ var DateFormatter = _.extend({}, Backgrid.CellFormatter.prototype, {
 var TimeFormatter = _.extend({}, Backgrid.CellFormatter.prototype, {
   fromRaw: function (raw, model) {
     var minsec = moment.utc(raw * 1000).format('HH:mm:ss');
-    var beaux = minsec.replace(/^00:/,'');
+    var beaux = minsec.replace(/^00:/, '');
     return beaux;
   }
 });
 
-var AudioCell = Backgrid.AudioCell = Backgrid.StringCell.extend({
+Backgrid.AudioCell = Backgrid.StringCell.extend({
   className: 'audio-cell',
   render: function () {
     this.$el.empty();

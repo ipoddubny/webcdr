@@ -1,12 +1,11 @@
 'use strict';
 
 var $ = require('jquery');
-var _ = require('underscore');
 var Backbone = require('backbone');
 Backbone.$ = $;
 var Marionette = require('backbone.marionette');
 
-var moment = require('moment');
+require('moment');
 require('moment/locale/ru');
 
 require('./plugins');
@@ -101,7 +100,6 @@ app.on('start', function (options) {
     app.router.navigate('cdr', { trigger: true });
   }
 });
-
 
 var Profile = Backbone.Model.extend({
   url: '/profile'

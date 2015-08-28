@@ -1,8 +1,7 @@
-var moment = require('moment');
 var audiojs = require('audiojs');
 
 // Avoid `console` errors in browsers that lack a console.
-(function() {
+(function () {
   var method;
   var noop = function () {};
   var methods = [
@@ -24,9 +23,6 @@ var audiojs = require('audiojs');
   }
 }());
 
-moment.locale('ru');
-
-audiojs.events.ready(function() {
-  var as = audiojs.createAll();
+audiojs.events.ready(function () {
+  audiojs.createAll();
 });
-

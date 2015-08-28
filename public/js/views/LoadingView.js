@@ -1,6 +1,5 @@
 'use strict';
 
-var _ = require('underscore');
 var Marionette = require('backbone.marionette');
 var Spinner = require('spin.js');
 
@@ -26,7 +25,7 @@ var LoadingView = Marionette.ItemView.extend({
       top: '50%', // Top position relative to parent
       left: '50%' // Left position relative to parent
     };
-    var spinner = new Spinner(opts).spin(this.el);
+    new Spinner(opts).spin(this.el);
   }
 });
 

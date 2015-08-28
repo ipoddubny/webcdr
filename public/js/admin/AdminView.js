@@ -72,7 +72,7 @@ var UserModalView = Marionette.ItemView.extend({
   onSave: function () {
     var fieldValidators = {
       id: function (val) {
-        return (!val) || (val == parseInt(val, 10));
+        return (!val) || (val.match(/^\d+$/));
       },
       name: function (val) {
         return val.length;
@@ -84,7 +84,7 @@ var UserModalView = Marionette.ItemView.extend({
         return true;
       },
       password: function (val, validatedFields) {
-        if (validatedFields.id && val.length == 0) {
+        if (validatedFields.id && val.length === 0) {
           // for existing user password may be blank
           return true;
         }
@@ -109,7 +109,7 @@ var UserModalView = Marionette.ItemView.extend({
     _.each(_.keys(fieldValidators), function (f) {
       var el = this.ui[f];
       var value;
-      if (el.attr('type') == 'checkbox') {
+      if (el.attr('type') === 'checkbox') {
         value = el.prop('checked');
       } else {
         value = el.val();
@@ -127,7 +127,7 @@ var UserModalView = Marionette.ItemView.extend({
       if (!user.id) {
         delete user.id;
       }
-      user.admin = !!parseInt(user.admin,10);
+      user.admin = !!parseInt(user.admin, 10);
       user.acl = user.acl.length ? user.acl.split(',') : undefined;
       this.trigger('save', new User(user));
     }
@@ -157,7 +157,7 @@ var AdminView = Marionette.LayoutView.extend({
           this.collection.create(user, {
             wait: true,
             success: function () {
-              app.rootView.modal.hide();
+              window.app.rootView.modal.hide();
             }
           });
         }
@@ -178,10 +178,10 @@ var AdminView = Marionette.LayoutView.extend({
       title: opts.title
     });
     this.listenTo(modalUserView, 'save', opts.onSave);
-    app.rootView.modal.show(modalUserView);
+    window.app.rootView.modal.show(modalUserView);
   },
   deleteUser: function (user) {
-    if (confirm('Удалить пользователя ' + user.get('name') + '?')) {
+    if (window.confirm('Удалить пользователя ' + user.get('name') + '?')) {
       user.destroy({wait: true});
     }
   },
@@ -194,8 +194,8 @@ var AdminView = Marionette.LayoutView.extend({
         user.save({}, {
           success: function () {
             // XXX dirty
-            self.collection.fetch({reset : true});
-            app.rootView.modal.hide();
+            self.collection.fetch({reset: true});
+            window.app.rootView.modal.hide();
           }
         });
       }

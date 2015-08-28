@@ -1,6 +1,6 @@
 {
   "name": "webcdr",
-  "version": "0.0.0",
+  "version": "0.9.0",
   "description": "Web Asterisk CDR viewer",
   "main": "server.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "watch-dbg": "watchify public/js/main.js -d -o public/js/build/bundle.js -v",
     "build": "browserify public/js/main.js -o public/js/build/bundle.js",
     "build-dbg": "browserify public/js/main.js -d -o public/js/build/bundle.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "semistandard"
   },
   "author": "Ivan Poddubny <ivan.poddubny@gmail.com>",
   "license": "Proprietary",
@@ -45,15 +45,27 @@
   },
   "devDependencies": {
     "browserify": "^11.0.0",
-    "browserify-shim": "^3.8.0"
+    "browserify-shim": "^3.8.0",
+    "semistandard": "^7.0.2"
   },
   "private": true,
   "browserify": {
     "transform": [
-      ["node-underscorify", {
-        "extensions": ["html", "ejs"],
-        "requires": [{"variable": "_", "module": "underscore"}]
-      }],
+      [
+        "node-underscorify",
+        {
+          "extensions": [
+            "html",
+            "ejs"
+          ],
+          "requires": [
+            {
+              "variable": "_",
+              "module": "underscore"
+            }
+          ]
+        }
+      ],
       "browserify-shim"
     ]
   },
@@ -80,5 +92,10 @@
         "jquery:jQuery"
       ]
     }
+  },
+  "semistandard": {
+    "ignore": [
+      "public/js/vendor/"
+    ]
   }
 }
