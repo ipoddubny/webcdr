@@ -2,10 +2,9 @@ var _ = require('lodash');
 var express = require('express');
 var compress = require('compression');
 var cookieParser = require('cookie-parser');
-var session = require('express-session');
+var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var LeveldbStore = require('connect-leveldb')(session);
 
 var config = require('./lib/config');
 var Users = require('./lib/models/users');
@@ -32,10 +31,7 @@ app.use(morgan('dev')); // logger
 app.use(compress());
 app.use(bodyParser());
 app.use(cookieParser());
-app.use(session({
-  store: new LeveldbStore({
-    dbLocation: config.session.database
-  }),
+app.use(cookieSession({
   secret: config.session.key
 }));
 app.use(passport.initialize());
