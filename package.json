@@ -11,7 +11,7 @@
     "test": "semistandard"
   },
   "author": "Ivan Poddubny <ivan.poddubny@gmail.com>",
-  "license": "Proprietary",
+  "license": "MIT",
   "dependencies": {
     "activedirectory": "^0.7.0",
     "backbone": "^1.2.1",
