@@ -30,7 +30,7 @@ passport.use(require('./lib/auth')(users));
 var app = express();
 app.use(morgan('dev')); // logger
 app.use(compress());
-app.use(bodyParser());
+app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cookieSession({
   secret: config.session.key
@@ -38,6 +38,7 @@ app.use(cookieSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/login', bodyParser.urlencoded({extended: false}));
 app.get('/login', function (req, res) {
   res.sendfile(__dirname + '/public/login.html');
 });
