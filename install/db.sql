@@ -18,7 +18,7 @@ INSERT INTO `webuser` (`name`,`username`,`password`,`admin`) VALUES ('Administra
 DROP TABLE IF EXISTS `cdr`;
 CREATE TABLE `cdr` (
    `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-   `calldate` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+   `calldate` DATETIME NOT NULL,
    `clid` VARCHAR(80) NOT NULL DEFAULT '',
    `src` VARCHAR(80) NOT NULL DEFAULT '',
    `dst` VARCHAR(80) NOT NULL DEFAULT '',
