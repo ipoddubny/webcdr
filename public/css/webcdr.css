@@ -85,3 +85,7 @@ div.audiojs {
 .audiojs .time { display: none; }
 .audiojs .error-message { height: 18px;line-height: 18px; }
 
+
+.backgrid th {
+	text-align: left;
+}
