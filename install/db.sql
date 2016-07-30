@@ -46,26 +46,3 @@ CREATE TABLE `cdr` (
    INDEX `clid` (`clid`)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `calls`;
-CREATE TABLE `calls` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `calldate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `src` varchar(80) NOT NULL DEFAULT '',
-  `dst` varchar(80) NOT NULL DEFAULT '',
-  `uniqueid` varchar(32) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `calldate` (`calldate`),
-  KEY `dst` (`dst`),
-  KEY `src` (`src`)
-)
-ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `report_timeperiods`;
-CREATE TABLE `report_timeperiods` (
-  `time_id` int(11) NOT NULL,
-  `start` time NOT NULL,
-  `end` time NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `report_timeperiods` VALUES (0,'08:30:00','10:00:00'),(1,'10:00:00','12:00:00'),(2,'12:00:00','15:00:00'),(3,'15:00:00','18:00:00'),(4,'18:00:00','21:00:00');

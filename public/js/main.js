@@ -15,7 +15,6 @@ var app = window.app = new Marionette.Application();
 var NavbarView = require('./views/NavbarView');
 
 require('./cdr');
-require('./report');
 require('./admin');
 
 var ModalRegion = Marionette.Region.extend({
@@ -48,10 +47,6 @@ app.on('start', function (options) {
     icon: 'fa-bars',
     target: 'cdr',
     active: true
-  }, {
-    name: 'Отчёты',
-    icon: 'fa-bar-chart',
-    target: 'report'
   }]);
 
   app.navbar = new NavbarView({
@@ -69,7 +64,6 @@ app.on('start', function (options) {
 
   var routeFunctions = {
     cdr: 'showCDR',
-    report: 'showReport',
     admin: 'showAdmin'
   };
 
