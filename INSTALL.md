@@ -28,18 +28,13 @@
    ```
    
 7. Set up your Asterisk to save cdr data into the database you've created
-8. Set up your Asterisk to save call recordings to mp3 files
-9. Create the symlink `PATH_TO_WEBCDR/recordings` pointing to the asterisk records directory,
-   usually it's `/var/spool/asterisk/monitor`.
-
-   Files must have paths conforming to the pattern `YYYY/M/D/anyting_${UNIQUEID}.mp3`,
-   where `${UNIQUEID}` matches uniqueid of a record in the cdr table in the database.
-10. Edit config.ini
-11. Start the server (HTTP on port 9030 by default):
+8. Set up your Asterisk to save call recordings to mp3 files. Files must contain uniqueid in names to find matching cdrs. Also, `record` column in the database table must be set to a non-null value to indicate presence of a recording
+9. Set database credentials, recordings glob pattern and other parameters in config.ini
+10. Start the server (HTTP on port 9030 by default):
     ```
     node server.js
     ```
 
     Use `admin`/`admincdr` to login for the first time. Don't forget to change the default password!
-12. Use a process manager like forever, pm2, systemd to run server in background.
-13. (optional) Set up standalone webserver to serve static files, proxy dynamic requests to node.js.
+11. Use a process manager like forever, pm2, systemd to run server in background.
+12. (optional) Set up standalone webserver to serve static files, proxy dynamic requests to node.js.
