@@ -78,7 +78,10 @@ util.log('Server is now running on port', port);
 function ensureAuthenticated (req, res, next) {
   if (!req.isAuthenticated()) {
     res.redirect('/login');
+    next('Failed login attempt');
+    return;
   }
+
   next();
 }
 
