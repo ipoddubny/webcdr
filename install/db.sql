@@ -33,7 +33,7 @@ CREATE TABLE `cdr` (
    `amaflags` VARCHAR(50) NULL DEFAULT NULL,
    `accountcode` VARCHAR(20) NULL DEFAULT NULL,
    `uniqueid` VARCHAR(32) NOT NULL DEFAULT '',
-   `userfield` FLOAT UNSIGNED NULL DEFAULT NULL,
+   `userfield` VARCHAR(32) NULL DEFAULT NULL,
    `peeraccount` VARCHAR(20) NOT NULL DEFAULT '',
    `linkedid` VARCHAR(32) NOT NULL DEFAULT '',
    `sequence` INT(11) NOT NULL DEFAULT '0',
@@ -42,7 +42,6 @@ CREATE TABLE `cdr` (
    INDEX `calldate` (`calldate`),
    INDEX `dst` (`dst`),
    INDEX `src` (`src`),
-   INDEX `dcontext` (`dcontext`),
    INDEX `clid` (`clid`)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
