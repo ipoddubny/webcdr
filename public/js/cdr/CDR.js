@@ -4,7 +4,7 @@ var Backbone = require('backbone');
 require('backbone.paginator');
 
 var CDR = Backbone.PageableCollection.extend({
-  url: '/api/cdrs',
+  url: URL_PREFIX + '/api/cdrs',
   state: {
     pageSize: 20
   }

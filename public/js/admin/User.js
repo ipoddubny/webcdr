@@ -11,7 +11,7 @@ var User = Backbone.Model.extend({
     acl_in: false,
     auth_ad: false
   },
-  urlRoot: '/admin/users/'
+  urlRoot: URL_PREFIX + '/admin/users/'
 });
 
 module.exports = User;

@@ -96,7 +96,7 @@ app.on('start', function (options) {
 });
 
 var Profile = Backbone.Model.extend({
-  url: '/profile'
+  url: URL_PREFIX + '/profile'
 });
 app.profile = new Profile();
 app.profile.fetch().then(function () {

@@ -48,17 +48,20 @@ app.use(locale(i18n.supported()));
 
 app.use('/login', bodyParser.urlencoded({extended: false}));
 app.get('/login', function (req, res) {
-  res.render('login', { $$: i18n.getTranslator(req.locale) });
+  res.render('login', {
+    $$: i18n.getTranslator(req.locale),
+    urlPrefix: config.web.urlPrefix
+  });
 });
 app.post('/login',
   passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login'
+    successRedirect: config.web.urlPrefix + '/',
+    failureRedirect: config.web.urlPrefix + '/login'
   })
 );
 app.get('/logout', function (req, res) {
   req.logout();
-  res.redirect('/');
+  res.redirect(config.web.urlPrefix + '/');
 });
 
 app.use('/api', ensureAuthenticated);
@@ -66,7 +69,10 @@ app.use('/api', require('./lib/api'));
 
 app.get('/', ensureAuthenticated);
 app.get('/', function (req, res) {
-  res.render('index', { $$: i18n.getTranslator(req.locale) });
+  res.render('index', {
+    $$: i18n.getTranslator(req.locale),
+    urlPrefix: config.web.urlPrefix
+  });
 });
 
 app.get('/profile', ensureAuthenticated);
@@ -85,7 +91,7 @@ util.log('Server is now running on port', port);
 
 function ensureAuthenticated (req, res, next) {
   if (!req.isAuthenticated()) {
-    res.redirect('/login');
+    res.redirect(config.web.urlPrefix + '/login');
     next('Failed login attempt');
     return;
   }

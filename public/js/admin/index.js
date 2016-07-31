@@ -10,7 +10,7 @@ window.app.on('start', function () {
 
   var Users = Backbone.Collection.extend({
     model: User,
-    url: '/admin/users'
+    url: URL_PREFIX + '/admin/users'
   });
 
   var users = self.users = new Users();
