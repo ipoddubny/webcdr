@@ -13,11 +13,11 @@ var tmpl = require('./cdr.html');
 var FilterView = require('./FilterView');
 
 var status2text = {
-  'NO ANSWER': 'Не отвечен',
-  BUSY: 'Занято',
-  ANSWERED: 'Отвечен',
-  FAILED: 'Ошибка',
-  CONGESTION: 'Перегрузка'
+  'NO ANSWER': $$('No answer'),
+  BUSY: $$('Busy'),
+  ANSWERED: $$('Answered'),
+  FAILED: $$('Failed'),
+  CONGESTION: $$('Congestion')
 };
 
 var StatusFormatter = _.extend({}, Backgrid.CellFormatter.prototype, {
@@ -55,40 +55,40 @@ Backgrid.AudioCell = Backgrid.StringCell.extend({
 
 var columns = [{
   name: 'calldate',
-  label: 'Время',
+  label: $$('Time'),
   editable: false,
   cell: 'string',
   formatter: DateFormatter
 }, {
   name: 'src',
-  label: 'Кто звонил',
+  label: $$('Source'),
   editable: false,
   cell: 'string'
 }, {
   name: 'dst',
-  label: 'Куда звонил',
+  label: $$('Destination'),
   editable: false,
   cell: 'string'
 }, {
   name: 'disposition',
-  label: 'Статус',
+  label: $$('Status'),
   editable: false,
   cell: 'string',
   formatter: StatusFormatter
 }, {
   name: 'billsec',
-  label: 'Время разговора',
+  label: $$('Talking time'),
   editable: false,
   cell: 'string',
   formatter: TimeFormatter
 }, {
   name: 'record',
-  label: 'Запись',
+  label: $$('Recording'),
   editable: false,
   cell: 'audio'
 }];
 
-var exportsTemplate = 'Скачать:&nbsp; <a data-target="records" href="#"><i class="fa fa-file-audio-o"></i>&nbsp;записи звонков</a>&nbsp;&nbsp;<a data-target="xlsx" href="#"><i class="fa fa-file-excel-o"></i>&nbsp;таблицу</a>';
+var exportsTemplate = $$('Download') + ':&nbsp; <a data-target="records" href="#"><i class="fa fa-file-audio-o"></i>&nbsp;' + $$('call recordings') + '</a>&nbsp;&nbsp;<a data-target="xlsx" href="#"><i class="fa fa-file-excel-o"></i>&nbsp;' + $$('spreadsheet') + '</a>';
 var ExportLinksView = Marionette.ItemView.extend({
   template: _.template(exportsTemplate),
   className: 'pull-right',

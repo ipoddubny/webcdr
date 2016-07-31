@@ -11,6 +11,10 @@ var config = require('./lib/config');
 var Users = require('./lib/models/users');
 var users = new Users();
 
+var i18n = require('./lib/i18n');
+i18n.init();
+var locale = require('locale');
+
 var passport = require('passport');
 passport.serializeUser(function (user, done) {
   done(null, user.id);
@@ -38,9 +42,13 @@ app.use(cookieSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.set('view engine', 'ejs');
+
+app.use(locale(i18n.supported()));
+
 app.use('/login', bodyParser.urlencoded({extended: false}));
 app.get('/login', function (req, res) {
-  res.sendfile(__dirname + '/public/login.html');
+  res.render('login', { $$: i18n.getTranslator(req.locale) });
 });
 app.post('/login',
   passport.authenticate('local', {
@@ -58,7 +66,7 @@ app.use('/api', require('./lib/api'));
 
 app.get('/', ensureAuthenticated);
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/public/index.html');
+  res.render('index', { $$: i18n.getTranslator(req.locale) });
 });
 
 app.get('/profile', ensureAuthenticated);

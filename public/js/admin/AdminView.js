@@ -135,7 +135,7 @@ var UserModalView = Marionette.ItemView.extend({
 });
 
 var ToolbarView = Marionette.ItemView.extend({
-  template: _.template('<div class="btn btn-default js-add"><span class="glyphicon glyphicon-plus"></span> Добавить</div>'),
+  template: _.template('<div class="btn btn-default js-add"><span class="glyphicon glyphicon-plus"></span> <%= $$("Create") %></div>'),
   triggers: {
     'click .js-add': 'add'
   }
@@ -152,7 +152,7 @@ var AdminView = Marionette.LayoutView.extend({
     var toolbar = new ToolbarView();
     this.listenTo(toolbar, 'add', function () {
       this.showModal({
-        title: 'Новый пользователь',
+        title: $$('New user'),
         onSave: function (user) {
           this.collection.create(user, {
             wait: true,
@@ -181,14 +181,14 @@ var AdminView = Marionette.LayoutView.extend({
     window.app.rootView.modal.show(modalUserView);
   },
   deleteUser: function (user) {
-    if (window.confirm('Удалить пользователя ' + user.get('name') + '?')) {
+    if (window.confirm($$('Delete user #?').replace('#', user.get('name')))) {
       user.destroy({wait: true});
     }
   },
   editUser: function (user) {
     var self = this;
     this.showModal({
-      title: 'Изменение пользователя',
+      title: $$('Edit user'),
       user: user,
       onSave: function (user) {
         user.save({}, {

@@ -9,12 +9,12 @@ var tmplFilter = require('./filter.html');
 
 var dateLocale = {
   format: 'DD/MM/YYYY',
-  applyLabel: 'Применить',
-  cancelLabel: 'Отмена',
-  fromLabel: 'С',
-  toLabel: 'По',
+  applyLabel: $$('Apply'),
+  cancelLabel: $$('Cancel'),
+  fromLabel: $$('From'),
+  toLabel: $$('To'),
   weekLabel: 'W',
-  customRangeLabel: 'Выбрать вручную',
+  customRangeLabel: $$('Custom'),
   daysOfWeek: moment.weekdaysMin(),
   monthNames: moment.monthsShort(),
   firstDay: 1
@@ -74,21 +74,23 @@ var FilterView = Marionette.ItemView.extend({
   onRender: function () {
     var self = this;
     this.$('.selectpicker').selectpicker({
-      noneSelectedText: 'Все'
+      noneSelectedText: $$('All')
     });
+
+    var ranges = {};
+    ranges[$$('Today')] = [moment().startOf('day'), moment().endOf('day')];
+    ranges[$$('Yesterday')] = [moment(0, 'HH').subtract(1, 'days'), moment().subtract(1, 'days').endOf('day')];
+    ranges[$$('Last 7 days')] = [moment(0, 'HH').subtract(6, 'days'), moment().endOf('day')];
+    ranges[$$('Last 30 days')] = [moment(0, 'HH').subtract(29, 'days'), moment().endOf('day')];
+    ranges[$$('This month')] = [moment().startOf('month'), moment().endOf('month')];
+    ranges[$$('Last month')] = [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')];
+
     this.ui.timerange.daterangepicker({
       locale: dateLocale,
       timePicker: true,
       timePicker24Hour: true,
       format: 'DD/MM/YYYY HH:mm',
-      ranges: {
-        'Сегодня': [moment().startOf('day'), moment().endOf('day')],
-        'Вчера': [moment(0, 'HH').subtract(1, 'days'), moment().subtract(1, 'days').endOf('day')],
-        'Последние 7 дней': [moment(0, 'HH').subtract(6, 'days'), moment().endOf('day')],
-        'Последние 30 дней': [moment(0, 'HH').subtract(29, 'days'), moment().endOf('day')],
-        'Текущий месяц': [moment().startOf('month'), moment().endOf('month')],
-        'Прошлый месяц': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-      },
+      ranges: ranges,
       buttonClasses: ['btn', 'btn-sm'],
       startDate: moment().startOf('day'),
       endDate: moment().endOf('day')

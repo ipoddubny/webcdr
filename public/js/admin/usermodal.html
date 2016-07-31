@@ -1,7 +1,7 @@
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><%= $$('Close') %></span></button>
       <h4 class="modal-title"><%=title %></h4>
     </div>
     <div class="modal-body">
@@ -9,46 +9,46 @@
       <input type="hidden" name="admin" value="<%=admin?'1':'0'%>">
       <div class="form-horizontal">
         <div class="form-group">
-          <label class="col-sm-3 control-label" for="name">Имя</label>
+          <label class="col-sm-3 control-label" for="name"><%= $$('Name') %></label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="name" name="name" placeholder="Иван Иванов" value="<%=name%>">
+            <input type="text" class="form-control" id="name" name="name" placeholder="<%= $$('Joe User') %>" value="<%=name%>">
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-3 control-label">Логин</label>
+          <label class="col-sm-3 control-label"><%= $$('Username') %></label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" name="username"  placeholder="iivanov" value="<%=username%>">
+            <input type="text" class="form-control" name="username"  placeholder="<%=$$('joeuser')%>" value="<%=username%>">
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-3 control-label">Пароль</label>
+          <label class="col-sm-3 control-label"><%= $$('Password') %></label>
           <div class="col-sm-9">
             <input type="password" class="form-control" name="password" value="<%=password%>">
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-3 control-label">Вход через AD</label>
+          <label class="col-sm-3 control-label"><%= $$('Use AD to auth') %></label>
           <div class="col-sm-9">
             <input type="checkbox" name="auth_ad" <%= (auth_ad ? " checked" : "") %>>
           </div>
         </div>
         <div class="well">
           <div class="form-group">
-            <label class="col-sm-12">Ограничить доступ звонками абонентов</label>
+            <label class="col-sm-12"><%= $$('Limit access to calls of these extensions') %></label>
             <div class="col-sm-12">
               <input type="text" class="form-control" name="acl" placeholder="123,456,789" value="<%=getTextACL()%>">
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-6">Отображать входящие звонки</label>
+            <label class="col-sm-6"><%= $$('Show all incoming calls') %></label>
             <input type="checkbox"  name="acl_in" <%= (acl_in ? " checked" : "") %>>
           </div>
         </div>
       </div>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-      <button type="button" class="btn btn-primary js-save">Сохранить</button>
+      <button type="button" class="btn btn-default" data-dismiss="modal"><%= $$('Close') %></button>
+      <button type="button" class="btn btn-primary js-save"><%= $$('Save') %></button>
     </div>
   </div>
 </div>

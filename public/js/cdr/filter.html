@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-sm-4">
 			<div class="form-group">
-				<label for="timerange" class="control-label">Время</label>
+				<label for="timerange" class="control-label"><%= $$('Time') %></label>
 				<div class="input-group">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span><input type="text" id="timerange" class="form-control" />
 				</div>
@@ -10,35 +10,35 @@
 		</div>
 		<div class="col-sm-2">
 			<div class="form-group">
-				<label for="status_filter" class="control-label">Статус</label>
+				<label for="status_filter" class="control-label"><%= $$('Status') %></label>
 				<select class="selectpicker form-control" id="status_filter" multiple>
-					<option value="ANSWERED">Отвечен</option>
-					<option value="NO ANSWER">Не отвечен</option>
-					<option value="BUSY">Занято</option>
-					<option value="FAILED">Ошибка</option>
-					<option value="CONGESTION">Перегрузка</option>
+					<option value="ANSWERED"><%= $$('Answered') %></option>
+					<option value="NO ANSWER"><%= $$('No answer') %></option>
+					<option value="BUSY"><%= $$('Busy') %></option>
+					<option value="FAILED"><%= $$('Failed') %></option>
+					<option value="CONGESTION"><%= $$('Congestion') %></option>
 				</select>
 			</div>
 		</div>
 		<div class="col-sm-2">
 			<div class="form-group">
-				<label for="direction_filter" class="control-label">Направление</label>
+				<label for="direction_filter" class="control-label"><%= $$('Direction') %></label>
 				<select class="selectpicker form-control" id="direction_filter" multiple>
-					<option value="in">Входящие</option>
-					<option value="out">Исходящие</option>
-					<option value="int">Внутренние</option>
+					<option value="in"><%= $$('Inbound') %></option>
+					<option value="out"><%= $$('Outbound') %></option>
+					<option value="int"><%= $$('Internal') %></option>
 				</select>
 			</div>
 		</div>
 		<div class="col-sm-2">
 			<div class="form-group">
-				<label for="phone_filter" class="control-label">Телефон</label>
+				<label for="phone_filter" class="control-label"><%= $$('Phone number') %></label>
 				<input class="phone form-control" id="phone_filter" placeholder=""/>
 			</div>
 		</div>
 		<div class="col-sm-2">
 			<div class="form-group">
-				<label for="per_page" class="control-label">На странице</label>
+				<label for="per_page" class="control-label"><%= $$('Results per page') %></label>
 				<select class="selectpicker form-control" id="per_page">
 					<option>20</option>
 					<option>50</option>

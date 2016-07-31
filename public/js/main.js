@@ -43,7 +43,7 @@ app.rootView = new RootView();
 
 app.on('start', function (options) {
   app.navcol = new Backbone.Collection([{
-    name: 'Звонки',
+    name: $$('Calls'),
     icon: 'fa-bars',
     target: 'cdr',
     active: true
@@ -56,7 +56,7 @@ app.on('start', function (options) {
 
   if (app.profile.get('admin')) {
     app.navcol.push({
-      name: 'Администрирование',
+      name: $$('Users'),
       icon: 'fa-users',
       target: 'admin'
     });

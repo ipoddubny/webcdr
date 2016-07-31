@@ -17,6 +17,12 @@
         <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="css/datepicker3.css">
         <link rel="stylesheet" href="css/webcdr.css">
+        <script>
+        var DICT = <%- $$.getJSON() %>;
+        function $$ (string) {
+          return DICT[string] || string;
+        }
+        </script>
     </head>
     <body>
 	<div id="navigation"></div>
