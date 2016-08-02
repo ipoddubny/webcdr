@@ -44,7 +44,7 @@ Backgrid.AudioCell = Backgrid.StringCell.extend({
   className: 'audio-cell',
   render: function () {
     this.$el.empty();
-    var src = '/api/recordings/' + this.model.id;
+    var src = URL_PREFIX + '/api/recordings/' + this.model.id;
     if (this.model.get(this.column.get('name'))) {
       this.$el.html('<div class="audiojs-download"><a href="' + src + '" download><span class="glyphicon glyphicon-download"></span></a></div><audio src="' + src + '" preload="none"></audio>');
       audiojs.create(this.$('audio')[0]);
@@ -101,7 +101,7 @@ var ExportLinksView = Marionette.ItemView.extend({
 
     var params = _.pick(self.collection.queryParams, ['start', 'end', 'status', 'number']);
     params.export = $(e.target).data('target');  // xlsx | records
-    window.location.assign('/api/cdrs?' + $.param(params));
+    window.location.assign(URL_PREFIX + '/api/cdrs?' + $.param(params));
   }
 });
 
