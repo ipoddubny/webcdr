@@ -1,35 +1,25 @@
-# WebCDR
-## интерфейс промотра CDR и прослушивания записей звонков для Asterisk
+# CDR web interface for Asterisk
 
 [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
 
 ![](https://cloud.githubusercontent.com/assets/1784421/17270493/24dda150-5664-11e6-8e4e-a8479fdf6307.png)
 
-### Возможности
+- View CDRs, filter by date and time, telephone number, direction and status
+- Export to xlsx
+- Listen to call recordings with built-in HTML5 audio player (mp3, ogg, wav) /flash fallback (mp3)
+- Download call recordings by one or in bulk (zip)
+- Create users with access limited to specific phone numbers
+- Authenticate users against Active Directory
 
-- просмотр CDR, с фильтрацией по времени, номеру телефона, статусу, направлению звонка
-- встроенный HTML5/flash плеер для прослушивания записей звонков
-- скачивание записей звонков по одной и группой в zip-архиве
-- экспорт в Excel (xlsx)
-- интерфейс администратора для управления пользователями
-- ограничение доступа пользователей данными по отдельным внутренним номерам
-- опционально - авторизация пользователей через ActiveDirectory
+## Requirements
 
-### Реализация
+- node.js 4 or later
+- MySQL 5.1+ (SQLite, Postgres, MSSQL might also work, but require manual tuning)
 
-Серверная часть - node.js, REST API на express.js.
-Клиентская - одностраничное приложение на Backbone/Marionette, зависимости через npm/bower, сборка с помощью Browserify.
+## Installation
 
-### Системные требования
+Follow instructions in [INSTALL.md](INSTALL.md).
 
-Клиентская часть тестировалась на актуальных версиях Safari, Firefox, Chrome. Работа в IE не проверялась, поддержка не гарантируется.
+## License
 
-Требования к серверу: node.js 4+.
-СУБД - MySQL 5.1+.
-
-### TODO
-
-- добавить инсталлятор
-- добавить подробные инструкции по настройке Asterisk
-- deb/rpm пакеты
-- реализовать полноценную поддержку часовых поясов
+[MIT](LICENSE)
