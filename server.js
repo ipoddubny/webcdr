@@ -43,6 +43,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
 
 app.use(locale(i18n.supported()));
 
