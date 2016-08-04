@@ -1,0 +1,11 @@
+[Service]
+ExecStart=/usr/bin/node /opt/webcdr/server.js
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=webcdr
+User=webcdr
+Group=webcdr
+
+[Install]
+WantedBy=multi-user.target
