@@ -14,6 +14,9 @@ window.app.on('start', function () {
     });
     self.cdrs.fetch().then(function () {
       self.rootView.main.show(cdrView);
+    }, function (err) {
+      window.app.displayError($$('Failed to load CDRs'));
+      self.rootView.main.empty();
     });
   };
 });

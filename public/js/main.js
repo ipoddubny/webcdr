@@ -11,6 +11,12 @@ require('moment/locale/ru');
 require('./plugins');
 
 var app = window.app = new Marionette.Application();
+app.displayError = function (message) {
+  $('#error').text(message).show();
+}
+app.hideError = function () {
+  $('#error').hide();
+}
 
 var NavbarView = require('./views/NavbarView');
 
@@ -84,6 +90,7 @@ app.on('start', function (options) {
   this.listenTo(app.navbar, 'navigate', function (target) {
     app.router.navigate(target);
     controller.changeTab(target);
+    app.hideError();
   });
 
   if (Backbone.history) {
@@ -99,6 +106,9 @@ var Profile = Backbone.Model.extend({
   url: URL_PREFIX + '/profile'
 });
 app.profile = new Profile();
-app.profile.fetch().then(function () {
-  app.start();
-});
+app.profile.fetch()
+  .then(function () {
+    app.start();
+  }, function (err) {
+    app.displayError($$('Failed to load user profile'));
+  });
