@@ -8,6 +8,7 @@
    ```
    cd PATH_TO_WEBCDR/public
    bower install
+   cd ..
    ```
 
 4. Install npm dependencies:
