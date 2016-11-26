@@ -98,5 +98,8 @@
     "ignore": [
       "public/js/vendor/"
     ]
+  },
+  "optionalDependencies": {
+    "sqlite3": "^3.1.8"
   }
 }
