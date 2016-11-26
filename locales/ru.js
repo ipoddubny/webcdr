@@ -78,5 +78,5 @@ module.exports = {
   'Use AD to auth': 'Вход через AD',
   'Limit access to calls of these extensions': 'Ограничить доступ звонками абонентов',
   'Show all incoming calls': 'Отображать все входящие звонки',
-  'Save': 'Сохранить',
+  'Save': 'Сохранить'
 };

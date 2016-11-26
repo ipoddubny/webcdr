@@ -8,6 +8,7 @@ var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var util = require('util');
+var path = require('path');
 
 var config = require('./lib/config');
 var Users = require('./lib/models/users');
@@ -45,7 +46,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views');
+app.set('views', path.join(__dirname, '/views'));
 
 app.use(locale(i18n.supported()));
 
@@ -86,7 +87,7 @@ app.get('/profile', function (req, res) {
 app.use('/admin', ensureAdmin);
 app.use('/admin', require('./lib/admin')(users));
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const port = process.env.PORT || 9030;
 app.listen(port);

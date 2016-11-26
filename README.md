@@ -1,7 +1,5 @@
 # CDR web interface for Asterisk
 
-[![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
-
 ![](https://cloud.githubusercontent.com/assets/1784421/17270493/24dda150-5664-11e6-8e4e-a8479fdf6307.png)
 
 - View CDRs, filter by date and time, telephone number, direction and status

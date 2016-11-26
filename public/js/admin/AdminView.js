@@ -11,6 +11,8 @@ var rowTemplate = require('./row.html');
 var tableTemplate = require('./table.html');
 var modalTemplate = require('./usermodal.html');
 
+var $$ = window.$$;
+
 var RowView = Marionette.ItemView.extend({
   tagName: 'tr',
   template: rowTemplate,

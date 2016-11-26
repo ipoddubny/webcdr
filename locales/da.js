@@ -78,5 +78,5 @@ module.exports = {
   'Use AD to auth': 'Brug AD at autentificere',
   'Limit access to calls of these extensions': 'Begræns adgangen til opkald af disse telefoner',
   'Show all incoming calls': 'Vis alle indgående opkald',
-  'Save': 'Gem',
+  'Save': 'Gem'
 };

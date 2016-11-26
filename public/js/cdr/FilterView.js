@@ -5,6 +5,8 @@ var moment = require('moment');
 require('bootstrap-daterangepicker');
 require('bootstrap-select');
 
+var $$ = window.$$;
+
 var tmplFilter = require('./filter.html');
 
 var dateLocale = {
