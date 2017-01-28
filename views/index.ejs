@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="css/datepicker3.css">
         <link rel="stylesheet" href="css/webcdr.css">
         <script>
+        var LOCALE = '<%= locale %>';
         var DICT = <%- $$.getJSON() %>;
         function $$ (string) {
           return DICT[string] || string;

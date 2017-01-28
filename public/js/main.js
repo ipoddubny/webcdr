@@ -7,8 +7,13 @@ var Marionette = require('backbone.marionette');
 
 var $$ = window.$$;
 
-require('moment');
+var moment = require('moment');
+// FIXME supported languages have to be hardcoded here,
+// otherwise date picker will be in English
 require('moment/locale/ru');
+require('moment/locale/da');
+
+moment.locale([window.LOCALE, 'en']);
 
 require('./plugins');
 

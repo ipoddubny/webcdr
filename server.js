@@ -74,6 +74,7 @@ app.use('/api', require('./lib/api'));
 app.get('/', ensureAuthenticated);
 app.get('/', function (req, res) {
   res.render('index', {
+    locale: req.locale,
     $$: i18n.getTranslator(req.locale),
     urlPrefix: config.web.urlPrefix
   });
