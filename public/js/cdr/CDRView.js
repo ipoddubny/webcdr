@@ -107,7 +107,7 @@ var ExportLinksView = Marionette.ItemView.extend({
     e.preventDefault();
 
     var params = _.pick(self.collection.queryParams, ['start', 'end', 'status', 'number']);
-    params.export = $(e.target).data('target');  // xlsx | records
+    params.export = $(e.target).data('target'); // xlsx | records
     window.location.assign(window.URL_PREFIX + '/api/cdrs?' + $.param(params));
   }
 });

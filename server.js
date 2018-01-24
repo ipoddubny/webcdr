@@ -7,7 +7,6 @@ var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var util = require('util');
 var path = require('path');
 
 var config = require('./lib/config');
@@ -92,7 +91,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const port = process.env.PORT || 9030;
 app.listen(port);
-util.log('Server is now running on port', port);
+console.log(new Date(), 'Server is now running on port', port);
 
 function ensureAuthenticated (req, res, next) {
   if (!req.isAuthenticated()) {
