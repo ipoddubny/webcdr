@@ -14,11 +14,9 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "~3.1.1",
     "backgrid": "~0.3.5",
     "backbone.paginator": "~2.0.0",
     "backgrid-paginator": "~0.3.5",
-    "bootstrap-select": "~1.5.2",
     "bootstrap-daterangepicker": "~2.0.0",
     "audiojs": "*",
     "font-awesome": "~4.2.0"
