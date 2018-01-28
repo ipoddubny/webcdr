@@ -387,6 +387,13 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
+bootstrap-daterangepicker@^2.1.30:
+  version "2.1.30"
+  resolved "https://registry.yarnpkg.com/bootstrap-daterangepicker/-/bootstrap-daterangepicker-2.1.30.tgz#f893dbfff5a4d7dfaab75460e8ea6969bb89689a"
+  dependencies:
+    jquery ">=1.10"
+    moment "^2.9.0"
+
 bootstrap-select@^1.12.4:
   version "1.12.4"
   resolved "https://registry.yarnpkg.com/bootstrap-select/-/bootstrap-select-1.12.4.tgz#7f15d3c0ce978868d9c09c70f96624f55fa02ee1"
@@ -2230,7 +2237,7 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
-jquery@>=1.8, jquery@^3.0.0:
+jquery@>=1.10, jquery@>=1.8, jquery@^3.0.0:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
@@ -2661,7 +2668,7 @@ moment-timezone@^0.5.11:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@^2.10.0, moment@^2.10.6:
+"moment@>= 2.9.0", moment@^2.10.0, moment@^2.10.6, moment@^2.9.0:
   version "2.20.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.20.1.tgz#d6eb1a46cbcc14a2b2f9434112c1ff8907f313fd"
 

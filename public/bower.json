@@ -17,7 +17,6 @@
     "backgrid": "~0.3.5",
     "backbone.paginator": "~2.0.0",
     "backgrid-paginator": "~0.3.5",
-    "bootstrap-daterangepicker": "~2.0.0",
     "audiojs": "*",
     "font-awesome": "~4.2.0"
   }
