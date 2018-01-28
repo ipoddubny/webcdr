@@ -78,8 +78,7 @@
     ]
   },
   "browser": {
-    "audiojs": "./public/bower_components/audiojs/audiojs/audio.js",
-    "bootstrap-datepicker": "./public/js/vendor/bootstrap-datepicker.js"
+    "audiojs": "./public/bower_components/audiojs/audiojs/audio.js"
   },
   "browserify-shim": {
     "audiojs": "audiojs"
