@@ -3,6 +3,8 @@
 var $ = global.jQuery = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
+// Marionette implicitly depends on backbone.wreqr, assuming it's already loaded
+require('backbone.wreqr');
 var Marionette = require('backbone.marionette');
 
 var $$ = window.$$;
